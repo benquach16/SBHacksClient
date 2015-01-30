@@ -1,6 +1,10 @@
 var scene, camera, renderer;
 var raycaster;
 var mouse = new THREE.Vector2();
+var mouseOld = new THREE.Vector2();
+
+var middleMouseDown = false;
+var rightMouseDown = false;
 
 init();
 render();
@@ -13,18 +17,61 @@ function onMouseMove( event )
 
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+	
+	if(middleMouseDown)
+	{
+		camera.position.x += event.clientX - mouseOld.x;
+		camera.position.y += event.clientY - mouseOld.y;
+		mouseOld.x = event.clientX;
+		mouseOld.y = event.clientY;
+		
+	}
+	if(rightMouseDown)
+	{
+		
+		camera.position.x;
+		camera.position.y;
+	}
 }
 
 function onMouseDown( event )
 {
-	var intersects = raycaster.intersectObjects(scene.children);
-	for( var i in intersects)
-	{
-		if(intersects.length > 0)
-		{
 
-		}
-	}	
+	if(event.button == 0)
+	{
+		//left
+	}
+	else if(event.button == 1)
+	{
+		//middle
+		//camera pan
+		middleMouseDown = true;
+		mouseOld.x = event.clientX;
+		mouseOld.y = event.clientY;
+
+	}
+	else if(event.button == 2)
+	{
+		//right
+		//camera rotate
+		rightMouseDown = true;
+	}
+}
+
+function onMouseUp( event )
+{
+	if(event.button == 0)
+	{
+		
+	}
+	else if(event.button == 1)
+	{
+		middleMouseDown = false;
+	}
+	else if(event.button == 2)
+	{
+		rightMouseDown = false;
+	}
 }
 
 function init()
@@ -35,7 +82,6 @@ function init()
 	
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 1000;
-
 
 	var geometry = new THREE.BoxGeometry( 200, 200, 200 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
@@ -65,6 +111,7 @@ function render()
 	requestAnimationFrame( render );
 	addEventListener('mousemove', onMouseMove, false);
 	addEventListener('mousedown', onMouseDown, false);
+	addEventListener('mouseup',onMouseUp, false);
 	var intersects = raycaster.intersectObjects(scene.children);
 
 	var intersectedObject;
