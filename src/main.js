@@ -20,7 +20,7 @@ function onMouseMove( event )
 	
 	if(middleMouseDown)
 	{
-		camera.position.x += event.clientX - mouseOld.x;
+		camera.position.x -= event.clientX - mouseOld.x;
 		camera.position.y += event.clientY - mouseOld.y;
 		mouseOld.x = event.clientX;
 		mouseOld.y = event.clientY;
