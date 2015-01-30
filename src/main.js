@@ -26,11 +26,24 @@ function onMouseMove( event )
 		mouseOld.y = event.clientY;
 		
 	}
-	if(rightMouseDown)
+	else if(rightMouseDown)
 	{
-		
+		var radious = 1000;
 		camera.position.x;
 		camera.position.y;
+		
+        var theta = - ( ( event.clientX - mouseOld.x ) * 0.5 );
+		var phi = ( ( event.clientY - mouseOld.y ) * 0.5 );
+
+		phi = Math.min( 180, Math.max( 0, phi ) );
+
+		camera.position.x = radious * Math.sin( theta * Math.PI / 360 )
+		    * Math.cos( phi * Math.PI / 360 );
+		camera.position.y = radious * Math.sin( phi * Math.PI / 360 );
+		camera.position.z = radious * Math.cos( theta * Math.PI / 360 )
+		    * Math.cos( phi * Math.PI / 360 );
+		camera.updateMatrix();
+		
 	}
 }
 
@@ -55,6 +68,8 @@ function onMouseDown( event )
 		//right
 		//camera rotate
 		rightMouseDown = true;
+		mouseOld.x = event.clientX;
+		mouseOld.y = event.clientY;
 	}
 }
 
