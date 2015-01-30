@@ -37,8 +37,6 @@ function init()
 	camera.position.z = 1000;
 
 
-
-
 	var geometry = new THREE.BoxGeometry( 200, 200, 200 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 	material.emissive.setHex(0xff0000);
@@ -61,7 +59,6 @@ function init()
 
 }
 
-
 function render()
 {
 	raycaster.setFromCamera(mouse, camera);
@@ -79,4 +76,50 @@ function render()
 
 	
 	renderer.render( scene, camera );
+}
+
+//move all vertices
+function move(distanceX,distanceY,distanceZ) {
+
+	for(var i = 0; i < geometry.vertices.length; i++) {
+		geometry.vertices[i].x += distanceX;
+		geometry.vertices[i].y += distanceY;
+		geometry.vertices[i].z += distanceZ;
+	}
+	
+	//move single vertex
+	//geometry.vertices[0].x += distanceX;
+	//geometry.verticesNeedUpdate = true;
+	//geometry.normalsNeedUpdate = true;
+	
+	//output vertices for testing
+	for(var i = 0; i < geometry.vertices.length; i++) {
+		//console.log(geometry.vertices[i]);
+	}
+}
+
+//select vertices with arrow keys
+function selectVertex() {
+
+	var selected = geometry.vertices[0];
+	//keyboard handler
+	document.onkeydown = function(e) {
+		switch (e.keyCode) {
+			case 37:
+				//left arrow
+				
+				break;
+			case 38:
+				//up arrow
+				break;
+			case 39:
+				//right arrow
+				break;
+			case 40:
+				//down arrow
+				break;
+		}
+	};
+	//console.log
+	
 }
