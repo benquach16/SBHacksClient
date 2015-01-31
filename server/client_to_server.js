@@ -25,7 +25,7 @@ function stringToCommit(msg)
 function removeCommit(ID)
 {
 	$.ajax({
-		url: "http://localhost/SBHacksClient/server/removeRow.php",       
+		url: "http://10.143.6.164:80/SBHacksClient/server/removeRow.php",       
 		type: "POST",
 		data: {
 			id: ID,
@@ -39,7 +39,7 @@ function removeCommit(ID)
 			if(listCommits[1] == ID)
 			{
 				listCommits.splice(i, 1);
-				alert(listCommits);
+				//alert(listCommits);
 				break;
 			}
 		}
@@ -49,7 +49,7 @@ function removeCommit(ID)
 function receiveCommit(ID)
 {
 	$.ajax({
-		url: "http://localhost/SBHacksClient/server/pullData.php",       
+		url: "http://10.143.6.164:80/SBHacksClient/server/pullData.php",       
 		type: "POST",
 		data: {
 			id: ID,
@@ -57,7 +57,7 @@ function receiveCommit(ID)
 		}//, 
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
-		alert(msg);
+		//alert(msg);
 		if(msg)
 		{
 			listCommits.push( stringToCommit(msg) );
@@ -69,7 +69,7 @@ function receiveCommit(ID)
 function sendCommit(_cmd, _verts1, _verts2, _func)
 {
    $.ajax({
-		url: "http://localhost/SBHacksClient/server/array_edit.php",       
+		url: "http://10.143.6.164:80/SBHacksClient/server/array_edit.php",       
 		type: "POST",
 		data: {
 			cmd: _cmd,
@@ -80,7 +80,7 @@ function sendCommit(_cmd, _verts1, _verts2, _func)
 		}//, 
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
-		alert(msg);
+		//alert(msg);
 		checkOldCommits(msg);
 	});
 }
@@ -97,7 +97,7 @@ function translatePoints(verticies, translation, selectedGeometry)
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
 	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
-	alert(pointsString + ", " + distanceString);
+	//alert(pointsString + ", " + distanceString);
 	
 	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, selectedGeometry);
 }
@@ -110,7 +110,7 @@ function decodeCommit(commit)
 		pointList = commit[3].split("|");
 
 		var translation = commit[4].split(",");
-		alert(pointList + ", " + translation);
+		//alert(pointList + ", " + translation);
 		var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
 		
 		return [commit[2], pointList, translation, commit[5]];
