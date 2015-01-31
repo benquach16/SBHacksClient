@@ -392,8 +392,7 @@ function init()
 	
 	geometry.verticesNeedUpdate = true;
 	var object = new THREE.Mesh( geometry, material );
-	scene.add( object );
-
+	scene.add(object);
 	light = new THREE.PointLight(0xffffff);
 	light.position.set(-100,150,100);
 	scene.add(light);
