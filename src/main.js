@@ -1,4 +1,5 @@
 var scene, camera, renderer;
+var geometry;
 var raycaster;
 var mouse = new THREE.Vector2();
 var mouseOld = new THREE.Vector2();
@@ -28,21 +29,6 @@ function onMouseMove( event )
 	}
 	else if(rightMouseDown)
 	{
-		var radious = 1000;
-		camera.position.x;
-		camera.position.y;
-		
-        var theta = - ( ( event.clientX - mouseOld.x ) * 0.5 );
-		var phi = ( ( event.clientY - mouseOld.y ) * 0.5 );
-
-		phi = Math.min( 180, Math.max( 0, phi ) );
-
-		camera.position.x = radious * Math.sin( theta * Math.PI / 360 )
-		    * Math.cos( phi * Math.PI / 360 );
-		camera.position.y = radious * Math.sin( phi * Math.PI / 360 );
-		camera.position.z = radious * Math.cos( theta * Math.PI / 360 )
-		    * Math.cos( phi * Math.PI / 360 );
-		camera.updateMatrix();
 		
 	}
 }
@@ -91,14 +77,14 @@ function onMouseUp( event )
 
 function init()
 {
-	//scene initialization code goes here
-	
+
+	//scene initialization code goes here	
 	scene = new THREE.Scene();
 	
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 1000;
 
-	var geometry = new THREE.BoxGeometry( 200, 200, 200 );
+	geometry = new THREE.BoxGeometry( 200, 200, 200 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 	material.emissive.setHex(0xff0000);
 
@@ -117,7 +103,7 @@ function init()
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
 	document.body.appendChild( renderer.domElement );
-
+	createUI();
 }
 
 function render()
