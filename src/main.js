@@ -52,10 +52,11 @@ function onMouseMove( event )
 		for(var i = 0 ; i < selectedVertices.length; i ++)
 		{
 			selectedVertices[i].x += event.clientX - mouseOld.x;
-			selectedGeometry.verticesNeedUpdate = true;
-			mouseOld.x = event.clientX;
+
+
 		}
-	
+				selectedGeometry.verticesNeedUpdate = true;
+	mouseOld.x = event.clientX;	
 	if(middleMouseDown)
 	{
 		camera.position.x -= event.clientX - mouseOld.x;
@@ -288,7 +289,7 @@ function init()
 
 	var light = new THREE.PointLight(0xffffff);
 	light.position.set(-100,150,100);
-	scene.add(light);
+	//scene.add(light);
 	raycaster = new THREE.Raycaster();
 	
 	renderer = new THREE.WebGLRenderer();
