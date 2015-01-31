@@ -95,7 +95,22 @@ function createUI()
 	});
 
 	var axes = ['X', 'Y', 'Z'];
-	var axeslist = controlsPanel.add( parameters, 'v', axes ).name('Axis');	
+	var axeslist = controlsPanel.add( parameters, 'v', axes ).name('Axis');
+	axeslist.onChange(function(value)
+	{
+		if(value == 'X')
+		{
+			CURRENT_AXIS = axisModeEnum.X;
+		}
+		else if(value == 'Y')
+		{
+			CURRENT_AXIS = axisModeEnum.Y;
+		}
+		else if(value == 'Z')
+		{
+			CURRENT_AXIS = axisModeEnum.Z;
+		}
+	});
 }
 
 

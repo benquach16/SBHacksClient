@@ -32,8 +32,15 @@ var transformModeEnum = {
 	ROTATE_MODE: "rotate_mode"
 };
 
+var axisModeEnum = {
+	X : "X",
+	Y : "Y",
+	Z : "Z"
+};
+
 var CURRENT_MODE = modeEnum.SELECTION_MODE;
 var CURRENT_TRANSFORM_MODE = transformModeEnum.TRANSLATE_MODE;
+var CURRENT_AXIS = axisModeEnum.X;
 
 init();
 render();
