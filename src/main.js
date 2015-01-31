@@ -88,7 +88,7 @@ function onMouseMove( event )
 
 				selectedGeometry.position.x += event.clientX -mouseOld.x;
 
- 				//translatePoints(selectedGeometry.vertices,event.clientX-mouseOld.x);
+ 				translatePoints(selectedGeometry.vertices,event.clientX-mouseOld.x);
 				
 			}
 		}
@@ -200,6 +200,7 @@ function onMouseUp( event )
 				selectedGeometry = intersects[0].object;
 				selectedGeometry.material.emissive.setHex(0xff0000);
 			}
+
 
 		}
 		else if(CURRENT_MODE == modeEnum.EDIT_MODE)
@@ -329,6 +330,18 @@ function createBox(x,y,z,sizex,sizey,sizez)
 	scene.add(object);
 }
 
+function createCylinder(x,y,z,sizex,sizey,sizez)
+{
+
+	var geometry = new THREE.BoxGeometry( sizex, sizey, sizez);
+	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
+	material.emissive.setHex(0x999999);
+	var object = new THREE.Mesh(geometry, material);
+	object.position.x = x;
+	object.position.y = y;
+	object.position.z = z;
+	scene.add(object);
+}
 
 function init()
 {

@@ -28,12 +28,9 @@ function modePanel()
 	this.v = 0;
 }
 
-function modeChange(newMode)
+function desc()
 {
-}
-
-function transformChange(newTransform)
-{
+	this.Deselect =function(){};
 }
 
 function createUI()
@@ -111,6 +108,9 @@ function createUI()
 			CURRENT_AXIS = axisModeEnum.Z;
 		}
 	});
+
+	var tmp = new desc();
+	controlsPanel.add(tmp, 'Deselect');
 }
 
 
