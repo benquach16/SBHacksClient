@@ -70,12 +70,12 @@ function createUI()
 	extrude.add(extrudetext, 'extrudeAmount');
 	extrude.add(extrudetext, 'Extrude');
 
-	var modes = ['Selection Mode', 'Edit Mode', 'Extrude Mode'];
+	var modes = ['Object Mode', 'Edit Mode', 'Extrude Mode'];
 	var parameters = new modePanel();
 	var modelist = controlsPanel.add( parameters, 'v', modes ).name('Mode');
 	modelist.onChange(function(value)
 	{
-		if(value == 'Selection Mode')
+		if(value == 'Object Mode')
 		{
 			switchMode(modeEnum.SELECTION_MODE);
 		}

@@ -318,22 +318,31 @@ function onMouseUp( event )
 			{
 				console.log("WHAT YEAR IS IT");
 				selectedFace = intersects[0].face;
-				selectedFace.color = new THREE.Color(0xeeff00);
-				var pts = [];
+				
 				var vertices = intersects[0].object.geometry.vertices;
-				pts.push(vertices[selectedFace.a]);
-				pts.push(vertices[selectedFace.b]);
-				pts.push(vertices[selectedFace.c]);
-				console.log(vertices[selectedFace.a]);
-				console.log(vertices[selectedFace.b]);
-				console.log(vertices[selectedFace.c]);
-				var shape = new THREE.Shape( pts );
-				var extrudeSettings = {
-					amount: 20,
-					steps: 1
-				};
+				var normal = selectedFace.normal;
+				normal.multiplyScalar(20);
 
-				var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+				var endA = vertices[selectedFace.a].add(normal);
+				var endB = vertices[selectedFace.b].add(normal);
+				var endC = vertices[selectedFace.c].add(normal);
+				var geometry = new THREE.Geometry();
+				geometry.vertices.push(
+					endA,
+					endB,
+					endC,
+					vertices[selectedFace.a],
+					vertices[selectedFace.b],
+					vertices[selectedFace.c]);
+				
+				geometry.faces.push(new THREE.Face3(0,4,2));
+				//geometry.faces.push(new THREE.Face3(0,4,2));
+				
+				var material = new THREE.MeshBasicMaterial( { color: 0x999999 } );
+				geometry.computeBoundingSphere();
+				var mesh = new THREE.Mesh(geometry, material);
+
+				scene.add(mesh);
 			}			
 		}
 		leftMouseDown = false;
