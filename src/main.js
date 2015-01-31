@@ -34,7 +34,15 @@ onMouseMove(event);
 
 function switchMode( mode )
 {
-	CURRENT_MODE = mode;
+	if(mode == modeEnum.EDIT_MODE)
+	{
+		//make sure we have something selected
+		
+		if(selectedGeometry != null)
+			CURRENT_MODE = mode;
+	}
+	else
+		CURRENT_MODE = mode;
 }
 
 function onMouseMove( event )
@@ -52,14 +60,25 @@ function onMouseMove( event )
 
 	if(selectedGeometry != null)
 	{
-		for(var i = 0 ; i < selectedVertices.length; i ++)
+		if(CURRENT_MODE == modeEnum.EDIT_MODE)
 		{
-			selectedVertices[i].x += event.clientX - mouseOld.x;
+			for(var i = 0 ; i < selectedVertices.length; i ++)
+			{
+				selectedVertices[i].x += event.clientX - mouseOld.x;
 
 
+			}
+			mouseOld.x = event.clientX;	
+			selectedGeometry.verticesNeedUpdate = true;
 		}
-		//mouseOld.x = event.clientX;	
-		selectedGeometry.verticesNeedUpdate = true;
+		else if(CURRENT_MODE == modeEnum.SELECTION_MODE)
+		{
+			if(leftMouseDown)
+			{
+				selectedGeometry.position.x += event.clientX - mouseOld.x;
+				mouseOld.x = event.clientX;
+			}
+		}
 	}
 
 	if(middleMouseDown)
@@ -84,8 +103,8 @@ function onMouseMove( event )
 			angleY += 360;
 		mouseOld.x = event.clientX;
 		mouseOld.y = event.clientY;		
-		var X = Math.sin(angleX * Math.PI/180)*100;
-		var Z = Math.cos(angleX * Math.PI/180)*100 + camera.position.z;
+		var X = Math.sin(angleX * Math.PI/180)*1000;
+		var Z = Math.cos(angleX * Math.PI/180)*1000;
 
 		camera.position.x = X;
 		camera.position.z = Z;
@@ -95,22 +114,28 @@ function onMouseMove( event )
 
 function onMouseDown( event )
 {
-	boundBox = true;
-	selectedVertices.length = 0;
-	//get intial x and y coords for bounding box
-	var pos = getMousePos(event);
-	pos.x -= mouseOffset;
-	pos.y += mouseOffset;
-	initX = pos.x;
-	initY = pos.y;
-	startX = event.clientX;
-	startY = event.clientY;
+
 
 
 	if(event.button == 0)
 	{
 		//left
 		leftMouseDown = true;
+		mouseOld.x = event.clientX;
+		if(CURRENT_MODE == modeEnum.EDIT_MODE)
+		{
+			boundBox = true;
+			selectedVertices.length = 0;
+			//get intial x and y coords for bounding box
+			var pos = getMousePos(event);
+			pos.x -= mouseOffset;
+			pos.y += mouseOffset;
+			initX = pos.x;
+			initY = pos.y;
+			startX = event.clientX;
+			startY = event.clientY;
+		}
+		
 	}
 	else if(event.button == 1)
 	{
@@ -154,6 +179,37 @@ function onMouseUp( event )
 				}
 			}
 		}
+		else if(CURRENT_MODE == modeEnum.EDIT_MODE)
+		{
+			boundBox = false;
+			//remove bounding box
+			scene.remove( scene.getObjectByName("boundBox") );
+			// var pos = getMousePos(event);
+			// var endX = pos.x;
+			// var endY = pos.y;
+			endX = event.clientX;
+			endY = event.clientY;
+			
+			for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
+				
+				var obj = scene.children[ i ];
+				if ( obj !== camera)
+				{
+					
+					for( var j = 0; j < obj.geometry.vertices.length; j++ )
+					{
+						if(inBox(startX, startY, endX, endY, obj.geometry.vertices[j]))
+						{
+							selectedVertices.push(obj.geometry.vertices[j]);
+							selectedGeometry = obj.geometry;
+						}
+					}
+				}
+			}
+			//console.log(selectedVertices[0]);
+			//console.log(selectedVertices[1]);
+			highlightVertices();
+		}
 		leftMouseDown = false;
 	}
 	else if(event.button == 1)
@@ -164,34 +220,7 @@ function onMouseUp( event )
 	{
 		rightMouseDown = false;
 	}
-	boundBox = false;
-	//remove bounding box
-	scene.remove( scene.getObjectByName("boundBox") );
-	// var pos = getMousePos(event);
-	// var endX = pos.x;
-	// var endY = pos.y;
-	endX = event.clientX;
-	endY = event.clientY;
-	
-	for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
-	
-		var obj = scene.children[ i ];
-		if ( obj !== camera)
-		{
-			
-			for( var j = 0; j < obj.geometry.vertices.length; j++ )
-			{
-				if(inBox(startX, startY, endX, endY, obj.geometry.vertices[j]))
-				{
-					selectedVertices.push(obj.geometry.vertices[j]);
-					selectedGeometry = obj.geometry;
-				}
-			}
-		}
-	}
-	//console.log(selectedVertices[0]);
-	//console.log(selectedVertices[1]);
-	highlightVertices();
+
 }
 
 function createVector(x, y, z, camera, width, height) {
@@ -282,7 +311,7 @@ function init()
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 	material.emissive.setHex(0x999999);
 	
-	distanceX = 500;
+	distanceX = 0;
 	distanceY = 0;
 	distanceZ = 0;
 	for(var i = 0; i < geometry.vertices.length; i++) {
@@ -431,19 +460,9 @@ function highlightVertices() {
       color: 0xFFFFFF,
       size: 20
     });
-	for(var i = 0; i < selectedVertices.length; i++ ) {
-		var radius   = 100,
-			segments = 64,
-			material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
-			geometry = new THREE.CircleGeometry( radius, segments );
+	for(var i = 0; i < selectedVertices.length; i++ )
+	{
 
-		// Remove center vertex
-		geometry.vertices.shift();
-		var obj = new THREE.Line( geometry, material )
-		obj.position.x = selectedVertices[i].x;
-		obj.position.y = selectedVertices[i].y;
-		obj.position.z = selectedVertices[i].z;
-		scene.add(obj  );
 	}
 	
 }

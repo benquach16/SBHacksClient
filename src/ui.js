@@ -25,7 +25,7 @@ function cylinderPanel()
 
 function viewPanel()
 {
-	this.SelectionMode = function(){ switchMode(modeEmum.SELECTION_MODE) };
+	this.SelectionMode = function(){ switchMode(modeEnum.SELECTION_MODE) };
 	this.EditMode = function(){switchMode(modeEnum.EDIT_MODE)};
 }
 
