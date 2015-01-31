@@ -52,6 +52,32 @@ function move(distanceX,distanceY,distanceZ) {
 	
 	//output vertices for testing
 	for(var i = 0; i < geometry.vertices.length; i++) {
-		console.log(geometry.vertices[i]);
+		//console.log(geometry.vertices[i]);
 	}
+}
+
+//select vertices with arrow keys
+function selectVertex() {
+
+	var selected = geometry.vertices[0];
+	//keyboard handler
+	document.onkeydown = function(e) {
+		switch (e.keyCode) {
+			case 37:
+				//left arrow
+				
+				break;
+			case 38:
+				//up arrow
+				break;
+			case 39:
+				//right arrow
+				break;
+			case 40:
+				//down arrow
+				break;
+		}
+	};
+	//console.log
+	
 }
