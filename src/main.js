@@ -64,6 +64,15 @@ function switchTransformMode( mode )
 	CURRENT_TRANSFORM_MODE = mode;
 }
 
+function deselectMesh()
+{
+	if(selectedGeometry != null)
+	{
+		selectedGeometry.material.emissive.setHex(0x999999);
+		selectedGeometry = null;
+	}
+}
+
 function pickFace()
 {
 	var intersects = raycaster.intersectObjects(scene.children);
@@ -208,7 +217,7 @@ function onMouseMove( event )
 					vect.y = 0;
 					vect.z = 0;
 
- 					translatePoints(selectedGeometry.geometry.vertices,vect,allObjects.indexOf(selectedGeometry.geometry));
+ 					//translatePoints(selectedGeometry.geometry.vertices,vect,allObjects.indexOf(selectedGeometry.geometry));
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
 				{

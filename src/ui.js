@@ -30,7 +30,8 @@ function modePanel()
 
 function desc()
 {
-	this.Deselect =function(){};
+	this.Deselect =function(){
+		deselectMesh();};
 }
 
 function extrudePanel()
