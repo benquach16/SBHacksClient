@@ -36,7 +36,8 @@ function onMouseDown( event )
 	pos.y += mouseOffset;
 	startX = pos.x;
 	startY = pos.y;
-	
+	startX = event.clientX;
+	startY = event.clientY;
 	var intersects = raycaster.intersectObjects(scene.children);
 	for( var i in intersects)
 	{
@@ -55,7 +56,8 @@ function onMouseUp( event )
 	var pos = getMousePos(event);
 	var endX = pos.x;
 	var endY = pos.y;
-	
+	endX = event.clientX;
+	endY = event.clientY;
 	for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
 	
 		var obj = scene.children[ i ];
@@ -67,12 +69,24 @@ function onMouseUp( event )
 			}
 		}
 	}
-	console.log(selectedVertices[0]);
-	console.log(selectedVertices[1]);
+	//console.log(selectedVertices[0]);
+	//console.log(selectedVertices[1]);
 	//highlightVertices();
 }
 
-function inBox(startX, startY, endX, endY, vertex) {
+function createVector(x, y, z, camera, width, height) {
+	var p = new THREE.Vector3(x, y, z);
+	var vector = p.project(camera);
+
+	vector.x = (vector.x + 1) / 2 * width;
+	vector.y = -(vector.y - 1) / 2 * height;
+
+	return vector;
+}
+
+function inBox(startX, startY, endX, endY, vertex)
+{
+	/*
 	var tmp;
 	if(startX > endX) {
 		tmp = startX;
@@ -92,7 +106,16 @@ function inBox(startX, startY, endX, endY, vertex) {
 			return false;
 		}
 	}
-	
+	*/
+	//project vertex
+	//console.log("Start X: " + startX);
+	//console.log("Start Y: " + startY);
+	var position = createVector(vertex.x, vertex.y, vertex.z, camera, window.innerWidth, window.innerHeight);
+
+	if(position.x > startX && position.x < endX && position.y > startY && position.y < endY)
+	{
+		console.log("fuck me five ways till friday");
+	}
 }
 
 function init()
