@@ -3,6 +3,8 @@ var geometry;
 var raycaster;
 var mouse = new THREE.Vector2();
 var mouseOld = new THREE.Vector2();
+var angleX;
+var angleY;
 
 var middleMouseDown = false;
 var rightMouseDown = false;
@@ -29,7 +31,24 @@ function onMouseMove( event )
 	}
 	else if(rightMouseDown)
 	{
-		
+		angleX+= event.clientX - mouseOld.x;
+		angleY+= event.clientY - mouseOld.y;
+		if(angleX > 360)
+			angleX -=360;
+		if(angleX < 0)
+			angleX +=360;
+		if(angleY > 360)
+			angleY -= 360;
+		if(angleY < 0)
+			angleY += 360;
+		mouseOld.x = event.clientX;
+		mouseOld.y = event.clientY;		
+		var X = Math.sin(angleX * Math.PI/180)*100;
+		var Z = Math.cos(angleX * Math.PI/180)*100;
+
+		camera.position.x = X;
+		camera.position.z = Z;
+		camera.lookAt(0,0,0);
 	}
 }
 
@@ -75,10 +94,10 @@ function onMouseUp( event )
 	}
 }
 
-function onDocumentMouseWheel( event )
+function onMouseWheel( event )
 {
-	console.log("fuck");
-	camera.position.z -= event.wheelDeltaY*500;
+	console.log(event.wheelDelta);
+	camera.position.z -= event.wheelDeltaY;
 }
 
 function init()
@@ -110,16 +129,19 @@ function init()
 
 	document.body.appendChild( renderer.domElement );
 	createUI();
+	var controls = new THREE.OrbitControls(camera);
+	controls.addEventListener('change',render);
 }
 
 function render()
 {
 	raycaster.setFromCamera(mouse, camera);
 	requestAnimationFrame( render );
-	addEventListener('mousemove', onMouseMove, false);
-	addEventListener('mousedown', onMouseDown, false);
-	addEventListener('mousewheel', onDocumentMouseWheel, false);
-	addEventListener('mouseup',onMouseUp, false);
+	//addEventListener('mousemove', onMouseMove, false);
+	//addEventListener('mousedown', onMouseDown, false);
+	//addEventListener('mousewheel', onMouseWheel, false);
+	//addEventListener('DOMMouseScroll', onMouseWheel, false);
+	//addEventListener('mouseup',onMouseUp, false);
 	var intersects = raycaster.intersectObjects(scene.children);
 
 	var intersectedObject;
