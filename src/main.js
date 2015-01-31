@@ -92,6 +92,7 @@ function onMouseMove( event )
 
 	mouse.x = (( event.clientX / window.innerWidth ) * 4 - 1) * window.innerWidth;
 	mouse.y = - (( event.clientY / window.innerHeight ) * 4 + 1) * window.innerHeight;
+
 	if(boundBox) 
 	{
 		//drawBoundBox(event);
@@ -112,7 +113,7 @@ function onMouseMove( event )
 						selectedVertices[i].x += (mouse.x - mouseOld.x);
 
 					}
-					selectedGeometry.verticesNeedUpdate = true;
+					selectedGeometry.geometry.verticesNeedUpdate = true;
 					differenceVector.x += (mouse.x - mouseOld.x);
 				}
 				else if(CURRENT_AXIS == axisModeEnum.Y)
@@ -122,7 +123,7 @@ function onMouseMove( event )
 						selectedVertices[i].y -= (mouseOld.y - mouse.y);
 
 					}
-					selectedGeometry.verticesNeedUpdate = true;
+					selectedGeometry.geometry.verticesNeedUpdate = true;
 					differenceVector.y -= (mouse.y - mouseOld.y);
 				}
 				else if(CURRENT_AXIS == axisModeEnum.Z)
@@ -132,7 +133,7 @@ function onMouseMove( event )
 						selectedVertices[i].z+= (mouse.x - mouseOld.x);
 
 					}
-					selectedGeometry.verticesNeedUpdate = true;
+					selectedGeometry.geometry.verticesNeedUpdate = true;
 					differenceVector.z += (mouse.x - mouseOld.x);
 				}
 			}
@@ -281,7 +282,7 @@ function onMouseMove( event )
 			}
 		}
 		//mouseOld.x = event.clientX;	
-		selectedGeometry.verticesNeedUpdate = true;
+		selectedGeometry.geometry.verticesNeedUpdate = true;
 	}
 
 	if(middleMouseDown)
@@ -398,8 +399,18 @@ function onMouseUp( event )
 			if(selectedGeometry != null)
 			{
 				//information packaging function
- 				translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
-				console.log(differenceVector.x);
+				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
+				{
+ 					translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
+					console.log(differenceVector.x);
+				}
+			}
+		}
+		else if(CURRENT_MODE == modeEnum.EDIT_MODE)
+		{
+			if(selectedVertices.length >0)
+			{
+				translatePoints(selectedVertices, differenceVector);
 			}
 		}
 		differenceVector.x = 0;
@@ -414,7 +425,7 @@ function onMouseUp( event )
 				if(intersects[0].object != grid && intersects[0] != light)
 				{
 
-					if(intersects[0] != selectedGeometry)
+					if(intersects[0].object != selectedGeometry)
 					{
 						if(selectedGeometry != null)
 						{
@@ -436,8 +447,11 @@ function onMouseUp( event )
 			// var endY = pos.y;
 			endX = event.clientX;
 			endY = event.clientY;
+			//shoot two rays
+			deselectMesh();
 			
-			for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
+			
+			for ( var i = 0; i < scene.children.length ; i ++ ) {
 				
 				var obj = scene.children[ i ];
 				if ( obj !== camera && obj != light && obj != grid)
@@ -447,12 +461,22 @@ function onMouseUp( event )
 					{
 						if(inBox(startX, startY, endX, endY, obj.geometry.vertices[j]))
 						{
-							selectedVertices.push(obj.geometry.vertices[j]);
-							selectedGeometry = obj.geometry;
+							if(selectedGeometry == null)
+							{
+								selectedVertices.push(obj.geometry.vertices[j]);
+								selectedGeometry = obj;
+								selectedGeometry.material.emissive.setHex(0xff0000);
+							}
+							else
+							{
+								//ignore it
+							}
 						}
 					}
 				}
 			}
+
+			
 			//console.log(selectedVertices[0]);
 			//console.log(selectedVertices[1]);
 			highlightVertices();
