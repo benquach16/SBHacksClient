@@ -91,11 +91,20 @@ function onMouseMove( event )
 	if(middleMouseDown)
 	{
 		
-		camera.position.x -= event.clientX - mouseOld.x;
-		camera.position.y += event.clientY - mouseOld.y;
+
+
+		var quat = new THREE.Quaternion();
+		var direction = new THREE.Vector3(-(event.clientX - mouseOld.x),event.clientY - mouseOld.y,0);
+		quat.setFromEuler(camera.rotation);
+
+		var endVect;
+		direction.applyQuaternion(quat);
+		//camera.position.z -= delta*10;
+		camera.position.x = direction.x + camera.position.x;
+		camera.position.y = direction.y + camera.position.y;
+		camera.position.z = direction.z + camera.position.z;
 		mouseOld.x = event.clientX;
 		mouseOld.y = event.clientY;
-		
 	}
 	else if(rightMouseDown)
 	{
@@ -287,7 +296,16 @@ function onMouseWheel( event )
 		delta = - event.detail;
 
 	}
-	camera.position.z -= delta*7;
+	var quat = new THREE.Quaternion();
+	var direction = new THREE.Vector3(0,0,-10*delta);
+	quat.setFromEuler(camera.rotation);
+
+	var endVect;
+	direction.applyQuaternion(quat);
+	//camera.position.z -= delta*10;
+	camera.position.x = direction.x + camera.position.x;
+	camera.position.y = direction.y + camera.position.y;
+	camera.position.z = direction.z + camera.position.z;
 }
 
 function createBox(x,y,z,sizex,sizey,sizez)
@@ -332,7 +350,7 @@ function init()
 
 	var light = new THREE.PointLight(0xffffff);
 	light.position.set(-100,150,100);
-	//scene.add(light);
+	scene.add(light);
 	raycaster = new THREE.Raycaster();
 	
 	renderer = new THREE.WebGLRenderer();
