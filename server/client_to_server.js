@@ -2,7 +2,7 @@
 var TABLE_NAME = "exavqxxu3s";
 var lastID = 0;
 
-var listCommits;
+var listCommits = [];
 
 function checkNewCommits()
 {
