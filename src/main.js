@@ -3,8 +3,8 @@ var geometry;
 var raycaster;
 var mouse = new THREE.Vector2();
 var mouseOld = new THREE.Vector2();
-var angleX;
-var angleY;
+var angleX = 0.0;
+var angleY = 0.0;
 
 var middleMouseDown = false;
 var rightMouseDown = false;
@@ -44,11 +44,11 @@ function onMouseMove( event )
 		mouseOld.x = event.clientX;
 		mouseOld.y = event.clientY;		
 		var X = Math.sin(angleX * Math.PI/180)*100;
-		var Z = Math.cos(angleX * Math.PI/180)*100;
+		var Z = Math.cos(angleX * Math.PI/180)*100 + camera.position.z;
 
 		camera.position.x = X;
 		camera.position.z = Z;
-		camera.lookAt(0,0,0);
+		//camera.lookAt(0,0,0);
 	}
 }
 
@@ -96,8 +96,18 @@ function onMouseUp( event )
 
 function onMouseWheel( event )
 {
-	console.log(event.wheelDelta);
-	camera.position.z -= event.wheelDeltaY;
+	var delta = 0;
+
+	if ( event.wheelDelta !== undefined ) { // WebKit / Opera / Explorer 9
+
+		delta = event.wheelDelta;
+
+	} else if ( event.detail !== undefined ) { // Firefox
+
+		delta = - event.detail;
+
+	}
+	camera.position.z -= delta*7;
 }
 
 function init()
@@ -129,19 +139,19 @@ function init()
 
 	document.body.appendChild( renderer.domElement );
 	createUI();
-	var controls = new THREE.OrbitControls(camera);
-	controls.addEventListener('change',render);
+	//var controls = new THREE.OrbitControls(camera);
+	//controls.addEventListener('change',render);
 }
 
 function render()
 {
 	raycaster.setFromCamera(mouse, camera);
 	requestAnimationFrame( render );
-	//addEventListener('mousemove', onMouseMove, false);
-	//addEventListener('mousedown', onMouseDown, false);
-	//addEventListener('mousewheel', onMouseWheel, false);
-	//addEventListener('DOMMouseScroll', onMouseWheel, false);
-	//addEventListener('mouseup',onMouseUp, false);
+	addEventListener('mousemove', onMouseMove, false);
+	addEventListener('mousedown', onMouseDown, false);
+	addEventListener('mousewheel', onMouseWheel, false);
+	addEventListener('DOMMouseScroll', onMouseWheel, false);
+	addEventListener('mouseup',onMouseUp, false);
 	var intersects = raycaster.intersectObjects(scene.children);
 
 	var intersectedObject;
