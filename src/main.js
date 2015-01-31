@@ -1,5 +1,6 @@
 var scene, camera, renderer;
 var light;
+var grid;
 var geometry;
 var raycaster;
 var mouse = new THREE.Vector2();
@@ -87,7 +88,7 @@ function onMouseMove( event )
 			{
 				if(CURRENT_AXIS == axisModeEnum.X)
 				{
-					selectedGeometry.position.x += (event.clientX -mouseOld.x)/40;
+					selectedGeometry.position.x += (event.clientX -mouseOld.x)/window.innerWidth;
 					var vect = new THREE.Vector3();
 					vect.x = event.clientX - mouseOld.x;
 					vect.y = 0;
@@ -96,12 +97,12 @@ function onMouseMove( event )
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
 				{
-					selectedGeometry.position.y -= (event.clientY - mouseOld.y)/40;
+					selectedGeometry.position.y -= (event.clientY - mouseOld.y)/window.innerWidth;
 					
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Z)
 				{
-					selectedGeometry.position.z += (event.clientY - mouseOld.y)/40;					
+					selectedGeometry.position.z += (event.clientY - mouseOld.y)/window.innerWidth;					
 				}
 			}
 		}
@@ -210,8 +211,19 @@ function onMouseUp( event )
 			var intersects = raycaster.intersectObjects(scene.children);
 			if(intersects.length > 0)
 			{
-				selectedGeometry = intersects[0].object;
-				selectedGeometry.material.emissive.setHex(0xff0000);
+				if(intersects[0].object != grid && intersects[0] != light)
+				{
+
+					if(intersects[0] != selectedGeometry)
+					{
+						if(selectedGeometry != null)
+						{
+							selectedGeometry.material.emissive.setHex(0x999999);
+						}
+						selectedGeometry = intersects[0].object;
+						selectedGeometry.material.emissive.setHex(0xff0000);
+					}
+				}
 			}
 
 
@@ -412,7 +424,7 @@ function init()
 		geo.vertices.push( new THREE.Vector3( i, 0,   size ) );
 	}
 
-	var grid = new THREE.Line( geo, mat, THREE.LinePieces );
+	grid = new THREE.Line( geo, mat, THREE.LinePieces );
 	scene.add( grid );
 }
 
