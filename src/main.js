@@ -999,7 +999,7 @@ function init()
 	grid = new THREE.Line( geo, mat, THREE.LinePieces );
 	scene.add( grid );
 
-	//setInterval(function () {updateMesh()}, 1000);
+	setInterval(function () {updateMesh()}, 1000);
 }
 
 
