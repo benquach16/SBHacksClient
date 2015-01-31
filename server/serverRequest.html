@@ -6,11 +6,23 @@
 <script src="http://localhost/SBHacksClient/libs/three.js"></script>
 <script>
     $(document).ready(function(){
-        $("button").click(function(){
+        $("button2").click(function(){
+           removeCommit.apply(this, [2]);
+        });
+        $("button3").click(function(){
+            sendCommit.apply(this, [3]);
+        });
+        $("button4").click(function(){
 			var point = new THREE.Vector3(4,5,6);
 			var array = [1,2,3];
 			alert(point + ", " + array);
-           removeCommit.apply(this, [9]);
+            translatePoints.apply(this, [point, array]);
+        });
+        $("button5").click(function(){
+			var point = new THREE.Vector3(4,5,6);
+			var array = [1,2,3];
+			alert(point + ", " + array);
+            scalePoints.apply(this, [point, array]);
         });
     });
 
@@ -19,7 +31,13 @@
 </head>
 <body>
 
-<button>Send an HTTP POST request to a page and get the result back</button>
+<button name = "button2">Remove an entry</button>
+<br>
+<button name = "button3">Get an entry</button>
+<br>
+<button name = "button4">Translate Points</button>
+<br>
+<button name = "button5">Scale Points</button>
 
 </body>
 </html>

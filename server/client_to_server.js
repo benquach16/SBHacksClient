@@ -1,7 +1,26 @@
 //TODO: Make this dynamic
 var TABLE_NAME = "exavqxxu3s";
+var lastID = 0;
 
-var lastid = 0;
+var listCommits;
+
+function checkNewCommits()
+{
+	recieveCommit(lastID + 1 );
+}
+
+function checkOldCommits(newID)
+{
+	for(var curID = lastID + 1; curID < newID; curID++)
+	{
+		recieveCommit(curID);
+	}
+}
+
+function stringToCommit(msg)
+{
+	return msg.split("&");
+}
 
 function removeCommit(ID)
 {
@@ -14,7 +33,16 @@ function removeCommit(ID)
 		}//, 
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
-		alert(msg);
+		//alert(msg);
+		for(var i = listCommits.length - 1; i >= 0; i--)
+		{
+			if(listCommits[1] == ID)
+			{
+				listCommits.splice(i, 1);
+				alert(listCommits);
+				break;
+			}
+		}
 	});
 }
 
@@ -29,7 +57,11 @@ function receiveCommit(ID)
 		}//, 
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
-		alert(msg);
+		//alert(msg);
+		if(msg)
+		{
+			listCommits.push( stringToCommit(msg) );
+		}
 	});
 }
 
@@ -47,10 +79,13 @@ function sendCommit(_cmd, _verts1, _verts2, _func){
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
 		alert(msg);
+		checkOldCommits(msg);
 	});
 }
 
-function translatePoints(arrPoints, distance)
+
+//Function calls
+function translatePoints(arrPoints, translation)
 {
 	var pointsString = "";
 	for(var i = 0; i < arrPoints.length; i++)
@@ -58,13 +93,13 @@ function translatePoints(arrPoints, distance)
 		pointsString = "" + arrPoints[i] + ',';
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
-	alert(arrPoints + ", " + distance);
-	var distanceString = "" + distance.getComponent(0) + ',' + distance.getComponent(1) + ',' + distance.getComponent(2);
+	alert(arrPoints + ", " + translation);
+	var distanceString = "" + translation.getComponent(0) + ',' + translation.getComponent(1) + ',' + distance.getComponent(2);
 	
 	sendRequest("TRANSLATE_POINTS", pointsString, distanceString, "");
 }
 
-function scalePoints(arrPoints, distance, origin)
+function scalePoints(arrPoints, scale, origin)
 {
 	var pointsString = "";
 	for(var i = 0; i < arrPoints.length; i++)
@@ -73,14 +108,14 @@ function scalePoints(arrPoints, distance, origin)
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
 	
-	var distanceString = "" + distance.x + ',' + distance.y + ',' + distance.z;
+	var distanceString = "" + scale.x + ',' + scale.y + ',' + scale.z;
 	
 	var originString = "" + origin.x + ',' + origin.y + ',' + origin.z;
 	
 	sendRequest("SCALE_POINTS", pointsString, distanceString, "");
 }
 
-function rotatePoints(arrPoints, distance, origin)
+function rotatePoints(arrPoints, rotation, origin)
 {
 	var pointsString = "";
 	for(var i = 0; i < arrPoints.length; i++)
@@ -89,7 +124,7 @@ function rotatePoints(arrPoints, distance, origin)
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
 	
-	var distanceString = "" + distance.x + ',' + distance.y + ',' + distance.z;
+	var distanceString = "" + rotation.x + ',' + rotation.y + ',' + rotation.z;
 	
 	var originString = "" + origin.x + ',' + origin.y + ',' + origin.z;
 	
