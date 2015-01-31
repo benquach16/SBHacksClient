@@ -68,7 +68,7 @@ function onMouseMove( event )
 		{
 			for(var i = 0 ; i < selectedVertices.length; i ++)
 			{
-				selectedVertices[i].x += event.clientX - mouseOld.x;
+				selectedVertices[i].x += (event.clientX - mouseOld.x) / 40;
 
 			}
 			selectedGeometry.verticesNeedUpdate = true;
