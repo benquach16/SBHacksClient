@@ -90,6 +90,7 @@ function onMouseMove( event )
 
 	if(middleMouseDown)
 	{
+		
 		camera.position.x -= event.clientX - mouseOld.x;
 		camera.position.y += event.clientY - mouseOld.y;
 		mouseOld.x = event.clientX;
@@ -98,6 +99,11 @@ function onMouseMove( event )
 	}
 	else if(rightMouseDown)
 	{
+		angleX += (event.clientX - mouseOld.x)/window.innerWidth;
+		angleY -= (event.clientY - mouseOld.y)/window.innerHeight;
+		camera.rotation.y = angleX * Math.PI/180;
+		camera.rotation.x = angleY * Math.PI/180;
+		/*
 		angleX+= event.clientX - mouseOld.x;
 		angleY+= event.clientY - mouseOld.y;
 		if(angleX > 360)
@@ -115,7 +121,7 @@ function onMouseMove( event )
 
 		camera.position.x = X;
 		camera.position.z = Z;
-		//camera.lookAt(0,0,0);
+		//camera.lookAt(0,0,0);*/
 	}
 }
 
