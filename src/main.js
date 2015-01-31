@@ -40,7 +40,6 @@ onMouseMove(event);
 
 function switchMode( mode )
 {
-
 	CURRENT_MODE = mode;
 }
 
@@ -58,9 +57,10 @@ function onMouseMove( event )
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 	if(boundBox) 
 	{
-		drawBoundBox(event);
+		//drawBoundBox(event);
 	}
 
+	highlightVertices();
 
 	if(selectedGeometry != null)
 	{
@@ -84,6 +84,8 @@ function onMouseMove( event )
 				
 			}
 		}
+		//mouseOld.x = event.clientX;	
+		selectedGeometry.verticesNeedUpdate = true;
 	}
 
 	if(middleMouseDown)
@@ -160,7 +162,6 @@ function onMouseDown( event )
 		mouseOld.y = event.clientY;
 	}
 } 
-
 
 function onMouseUp( event )
 {
@@ -431,7 +432,7 @@ function move(distanceX,distanceY,distanceZ) {
 	}
 }
 
-//select vertices with arrow keys
+//selected vertices highlighted
 function highlightVertices() {
 
 	//var selected = geometry.vertices[0];
@@ -454,14 +455,31 @@ function highlightVertices() {
 		// }
 	// };
 	//console.log
-	particles = new THREE.Geometry(),
-    pMaterial = new THREE.ParticleBasicMaterial({
-      color: 0xFFFFFF,
-      size: 20
+	var pGeometry = new THREE.Geometry();
+    var pMaterial = new THREE.PointCloudMaterial({
+      color: 0x0000ff,
+      size: 40
     });
-	for(var i = 0; i < selectedVertices.length; i++ )
-	{
+	
+	for(var i = 0; i < selectedVertices.length; i++ ) {
+	
+		// var radius   = 100,
+			// segments = 64,
+			// material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
+			// geometry = new THREE.CircleGeometry( radius, segments );
+		pGeometry.vertices.push(selectedVertices[i]);
 
+		// Remove center vertex
+		// geometry.vertices.shift();
+		// var obj = new THREE.Line( geometry, material )
+		// obj.position.x = selectedVertices[i].x;
+		// obj.position.y = selectedVertices[i].y;
+		// obj.position.z = selectedVertices[i].z;
+		// scene.add(obj  );
 	}
+	scene.remove( scene.getObjectByName("selected") );
+	var selected = new THREE.PointCloud( pGeometry, pMaterial);
+	selected.name = "selected";
+	scene.add(selected);
 	
 }
