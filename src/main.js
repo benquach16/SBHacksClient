@@ -13,7 +13,12 @@ function init()
 
 	geometry = new THREE.BoxGeometry( 200, 200, 200 );
 	material = new THREE.MeshBasicMaterial( { color: 0xff0000} );
-
+	//wireframe for testing
+    material.wireframe = true;
+	
+	//move vertices
+	move(0,500,0);
+	
 	mesh = new THREE.Mesh( geometry, material );
 	scene.add( mesh );
 
@@ -24,10 +29,29 @@ function init()
 
 }
 
-
 function render()
 {
 	requestAnimationFrame( render );
 
 	renderer.render( scene, camera );
+}
+
+//move all vertices
+function move(distanceX,distanceY,distanceZ) {
+
+	for(var i = 0; i < geometry.vertices.length; i++) {
+		geometry.vertices[i].x += distanceX;
+		geometry.vertices[i].y += distanceY;
+		geometry.vertices[i].z += distanceZ;
+	}
+	
+	//move single vertex
+	//geometry.vertices[0].x += distanceX;
+	//geometry.verticesNeedUpdate = true;
+	//geometry.normalsNeedUpdate = true;
+	
+	//output vertices for testing
+	for(var i = 0; i < geometry.vertices.length; i++) {
+		console.log(geometry.vertices[i]);
+	}
 }
