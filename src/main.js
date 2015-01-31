@@ -242,7 +242,7 @@ function onMouseUp( event )
 			for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
 				
 				var obj = scene.children[ i ];
-				if ( obj !== camera && obj != light)
+				if ( obj !== camera && obj != light && obj != grid)
 				{
 					
 					for( var j = 0; j < obj.geometry.vertices.length; j++ )
