@@ -103,29 +103,34 @@ function onMouseMove( event )
 			{
 				if(CURRENT_AXIS == axisModeEnum.X)
 				{
-					selectedGeometry.position.x += (event.clientX -mouseOld.x)/window.innerWidth;
+					for(var i = 0; i < selectedGeometry.geometry.vertices.length; i++)
+					{
+						selectedGeometry.geometry.vertices[i].x += (event.clientX - mouseOld.x)*5/window.innerWidth;
+					}
+					selectedGeometry.geometry.verticesNeedUpdate = true;
 					var vect = new THREE.Vector3();
 					vect.x = event.clientX - mouseOld.x;
 					vect.y = 0;
 					vect.z = 0;
-					for(var i = 0; i < allObjects.length; i++)
-					{
-						if(allObjects[i] == selectedGeometry)
-						{
-							//console.log("suck a fuck");
-						}
-				
-					}
- 					translatePoints(selectedGeometry.vertices,vect);
+
+ 					//translatePoints(selectedGeometry.geometry.vertices,allObjects.indexOf(selectedGeometry),vect);
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
 				{
-					selectedGeometry.position.y -= (event.clientY - mouseOld.y)/window.innerWidth;
+					for(var i = 0; i < selectedGeometry.geometry.vertices.length; i++)
+					{
+						selectedGeometry.geometry.vertices[i].y -= (event.clientY - mouseOld.y)*5/window.innerWidth;
+					}
+					selectedGeometry.geometry.verticesNeedUpdate = true;
 					
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Z)
 				{
-					selectedGeometry.position.z += (event.clientY - mouseOld.y)/window.innerWidth;					
+					for(var i = 0; i < selectedGeometry.geometry.vertices.length; i++)
+					{
+						selectedGeometry.geometry.vertices[i].z += (event.clientX - mouseOld.x)*5/window.innerWidth;
+					}
+					selectedGeometry.geometry.verticesNeedUpdate = true;
 				}
 			}
 		}
