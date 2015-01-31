@@ -10,7 +10,7 @@
            removeCommit.apply(this, [2]);
         });
         $("#button3").click(function(){
-            sendCommit.apply(this, [3]);
+            receiveCommit.apply(this, [5]);
         });
         $("#button4").click(function(){
             var point = new THREE.Vector3(4,5,6);
@@ -20,9 +20,10 @@
         });
         $("#button5").click(function(){
             var point = new THREE.Vector3(4,5,6);
+			var origin = new THREE.Vector3(0,0,0);
             var array = [1,2,3];
             alert(point + ", " + array);
-            scalePoints.apply(this, [point, array]);
+            scalePoints.apply(this, [point, array, origin]);
         });
     });
 

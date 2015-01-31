@@ -6,14 +6,14 @@ var listCommits = [];
 
 function checkNewCommits()
 {
-	recieveCommit(lastID + 1 );
+	receiveCommit(lastID + 1 );
 }
 
 function checkOldCommits(newID)
 {
 	for(var curID = lastID + 1; curID < newID; curID++)
 	{
-		recieveCommit(curID);
+		receiveCommit(curID);
 	}
 }
 
@@ -57,7 +57,7 @@ function receiveCommit(ID)
 		}//, 
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
-		//alert(msg);
+		alert(msg);
 		if(msg)
 		{
 			listCommits.push( stringToCommit(msg) );
@@ -94,9 +94,9 @@ function translatePoints(arrPoints, translation)
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
 	alert(arrPoints + ", " + translation);
-	var distanceString = "" + translation.getComponent(0) + ',' + translation.getComponent(1) + ',' + distance.getComponent(2);
+	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
 	
-	sendRequest("TRANSLATE_POINTS", pointsString, distanceString, "");
+	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, "");
 }
 
 function scalePoints(arrPoints, scale, origin)
@@ -112,7 +112,7 @@ function scalePoints(arrPoints, scale, origin)
 	
 	var originString = "" + origin.x + ',' + origin.y + ',' + origin.z;
 	
-	sendRequest("SCALE_POINTS", pointsString, distanceString, "");
+	sendCommit("SCALE_POINTS", pointsString, distanceString, "");
 }
 
 function rotatePoints(arrPoints, rotation, origin)
@@ -128,5 +128,5 @@ function rotatePoints(arrPoints, rotation, origin)
 	
 	var originString = "" + origin.x + ',' + origin.y + ',' + origin.z;
 	
-	sendRequest("ROTATE_POINTS", pointsString, distanceString, "");
+	sendCommit("ROTATE_POINTS", pointsString, distanceString, "");
 }
