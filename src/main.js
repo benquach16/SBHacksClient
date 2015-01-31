@@ -153,10 +153,12 @@ function onMouseMove( event )
 	}
 	else if(rightMouseDown)
 	{
-		angleX -= (event.clientX - mouseOld.x)/window.innerWidth;
+		
+		
+		/*angleX -= (event.clientX - mouseOld.x)/window.innerWidth;
 		angleY -= (event.clientY - mouseOld.y)/window.innerHeight;
 		camera.rotation.y = angleX * Math.PI/180;
-		camera.rotation.x = angleY * Math.PI/180;
+		camera.rotation.x = angleY * Math.PI/180;*/
 		/*
 		angleX+= event.clientX - mouseOld.x;
 		angleY+= event.clientY - mouseOld.y;
@@ -456,7 +458,7 @@ function init()
 
 	document.body.appendChild( renderer.domElement );
 	createUI();
-	//var controls = new THREE.OrbitControls(camera);
+	var controls = new THREE.OrbitControls(camera, renderer.domElement);
 	//controls.addEventListener('change',render);
 	
 	//grid
@@ -478,6 +480,7 @@ function init()
 	scene.add( grid );
 }
 
+controls.addEventListener('change', render);
 function render()
 {
 	raycaster.setFromCamera(mouse, camera);
