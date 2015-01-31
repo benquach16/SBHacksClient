@@ -137,7 +137,7 @@ function onMouseMove( event )
 	{
 		
 
-
+		/*
 		var quat = new THREE.Quaternion();
 		var direction = new THREE.Vector3(-(event.clientX - mouseOld.x),event.clientY - mouseOld.y,0);
 		quat.setFromEuler(camera.rotation);
@@ -149,7 +149,7 @@ function onMouseMove( event )
 		camera.position.y = direction.y + camera.position.y;
 		camera.position.z = direction.z + camera.position.z;
 		mouseOld.x = event.clientX;
-		mouseOld.y = event.clientY;
+		mouseOld.y = event.clientY;*/
 	}
 	else if(rightMouseDown)
 	{
