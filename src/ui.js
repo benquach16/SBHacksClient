@@ -35,6 +35,7 @@ function desc()
 
 function extrudePanel()
 {
+	this.PickFace = function(){};
 	this.extrudeAmount = 20;
 	this.Extrude = function() {};
 	
@@ -69,7 +70,7 @@ function createUI()
 	extrude.add(extrudetext, 'extrudeAmount');
 	extrude.add(extrudetext, 'Extrude');
 
-	var modes = ['Selection Mode', 'Edit Mode'];
+	var modes = ['Selection Mode', 'Edit Mode', 'Extrude Mode'];
 	var parameters = new modePanel();
 	var modelist = controlsPanel.add( parameters, 'v', modes ).name('Mode');
 	modelist.onChange(function(value)
@@ -81,6 +82,10 @@ function createUI()
 		else if(value == 'Edit Mode')
 		{
 			switchMode(modeEnum.EDIT_MODE);			
+		}
+		else if(value == 'Extrude Mode')
+		{
+			switchMode(modeEnum.EXTRUDE_MODE);
 		}
 		
 	});

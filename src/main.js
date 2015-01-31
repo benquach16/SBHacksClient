@@ -20,11 +20,16 @@ var initY;
 var mouseOffset = 24;
 var selectedVertices = [];
 var selectedGeometry = null;
+var selectedFace = null;
+
+
+var allObjects = [];
 
 
 var modeEnum = {
 	SELECTION_MODE : "selection_mode",
-	EDIT_MODE : "edit_mode"
+	EDIT_MODE : "edit_mode",
+	EXTRUDE_MODE : "extrude_mode",
 };
 
 var transformModeEnum = {
@@ -55,6 +60,16 @@ function switchMode( mode )
 function switchTransformMode( mode )
 {
 	CURRENT_TRANSFORM_MODE = mode;
+}
+
+function pickFace()
+{
+	var intersects = raycaster.intersectObjects(scene.children);
+	if(intersects.length > 0)
+	{
+		selectedFace = intersects[0].face;
+		selectedFace.color = new THREE.Color(0xeeff00);
+	}
 }
 
 function onMouseMove( event )
@@ -93,6 +108,14 @@ function onMouseMove( event )
 					vect.x = event.clientX - mouseOld.x;
 					vect.y = 0;
 					vect.z = 0;
+					for(var i = 0; i < allObjects.length; i++)
+					{
+						if(allObjects[i] == selectedGeometry)
+						{
+							//console.log("suck a fuck");
+						}
+				
+					}
  					translatePoints(selectedGeometry.vertices,vect);
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
@@ -353,6 +376,7 @@ function createBox(x,y,z,sizex,sizey,sizez)
 	object.position.y = y;
 	object.position.z = z;
 	scene.add(object);
+	allObjects.push(object);
 }
 
 function createCylinder(x,y,z,sizex,sizey,sizez)
@@ -393,6 +417,7 @@ function init()
 	geometry.verticesNeedUpdate = true;
 	var object = new THREE.Mesh( geometry, material );
 	scene.add(object);
+	allObjects.push(object);
 	light = new THREE.PointLight(0xffffff);
 	light.position.set(-100,150,100);
 	scene.add(light);
