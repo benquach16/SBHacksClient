@@ -1,7 +1,39 @@
 //TODO: Make this dynamic
 var TABLE_NAME = "exavqxxu3s";
 
-function sendRequest(_cmd, _verts1, _verts2, _func){
+var lastid = 0;
+
+function removeCommit(ID)
+{
+	$.ajax({
+		url: "http://localhost/SBHacksClient/server/removeRow.php",       
+		type: "POST",
+		data: {
+			id: ID,
+			tableName: TABLE_NAME
+		}//, 
+		//error: Utilities.Logger.displayAjaxError
+	}).done(function( msg ) {
+		alert(msg);
+	});
+}
+
+function receiveCommit(ID)
+{
+	$.ajax({
+		url: "http://localhost/SBHacksClient/server/pullData.php",       
+		type: "POST",
+		data: {
+			id: ID,
+			tableName: TABLE_NAME
+		}//, 
+		//error: Utilities.Logger.displayAjaxError
+	}).done(function( msg ) {
+		alert(msg);
+	});
+}
+
+function sendCommit(_cmd, _verts1, _verts2, _func){
    $.ajax({
 		url: "http://localhost/SBHacksClient/server/array_edit.php",       
 		type: "POST",

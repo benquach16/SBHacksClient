@@ -36,13 +36,7 @@ VALUES (
 '$row[4]'
 )
 " );
-   
-//if($data[2] == "remove")
-//{
-//	delete from $_POST["tableName"]
-//	where id = $data[1]
-//}
- 
+
 if (!empty($sql)) {
 	$last_id = $con->insert_id;
 	echo $last_id;
