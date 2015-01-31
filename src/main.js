@@ -113,6 +113,7 @@ function onMouseMove( event )
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
+					differenceVector.x += (mouse.x - mouseOld.x);
 				}
 				else if(CURRENT_AXIS == axisModeEnum.Y)
 				{
@@ -122,6 +123,7 @@ function onMouseMove( event )
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
+					differenceVector.y -= (mouse.y - mouseOld.y);
 				}
 				else if(CURRENT_AXIS == axisModeEnum.Z)
 				{
@@ -131,6 +133,7 @@ function onMouseMove( event )
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
+					differenceVector.z += (mouse.x - mouseOld.x);
 				}
 			}
 			
@@ -151,6 +154,7 @@ function onMouseMove( event )
 						selectedVertices[i].x *= 1+(mouse.x - mouseOld.x);
 						selectedVertices[i].x += average;
 					}
+					
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Y)
@@ -385,10 +389,14 @@ function onMouseUp( event )
 	{
 
 		//reset the difference vector so we know how much changed
-		if(selectedGeometry != null)
+		if(CURRENT_MODE == modeEnum.SELECTION_MODE)
 		{
- 			translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
-			console.log(differenceVector.x);
+			if(selectedGeometry != null)
+			{
+				//information packaging function
+ 				translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
+				console.log(differenceVector.x);
+			}
 		}
 		differenceVector.x = 0;
 		differenceVector.y = 0;
