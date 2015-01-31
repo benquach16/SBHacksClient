@@ -23,10 +23,15 @@ function cylinderPanel()
 	this.Create = function(){};
 }
 
+function viewPanel()
+{
+}
+
 function createUI()
 {
 	this.controlsPanel = new dat.GUI();
-	
+
+	//this.viewsPanel = new dat.GUI();
 	var ctext = new cubePanel();
 	var cube = this.controlsPanel.addFolder('Create Cube');
 	cube.add(ctext,'X');

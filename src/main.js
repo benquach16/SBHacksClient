@@ -8,13 +8,14 @@ var angleY = 0.0;
 
 var middleMouseDown = false;
 var rightMouseDown = false;
+var leftMouseDown = false;
 //bounding box
 var boundBox;
 var initX;
 var initY;
 var mouseOffset = 24;
 var selectedVertices = [];
-
+var selectedGeometry;
 init();
 render();
 onMouseMove(event);
@@ -30,6 +31,14 @@ function onMouseMove( event )
 	{
 		drawBoundBox(event);
 	}
+
+		for(var i = 0 ; i < selectedVertices.length; i ++)
+		{
+			selectedVertices[i].x += event.clientX - mouseOld.x;
+			selectedGeometry.verticesNeedUpdate = true;
+			mouseOld.x = event.clientX;
+		}
+	
 	if(middleMouseDown)
 	{
 		camera.position.x -= event.clientX - mouseOld.x;
@@ -85,6 +94,7 @@ function onMouseDown( event )
 	if(event.button == 0)
 	{
 		//left
+		leftMouseDown = true;
 	}
 	else if(event.button == 1)
 	{
@@ -110,7 +120,7 @@ function onMouseUp( event )
 
 	if(event.button == 0)
 	{
-		
+		leftMouseDown = false;
 	}
 	else if(event.button == 1)
 	{
@@ -132,9 +142,12 @@ function onMouseUp( event )
 	
 		var obj = scene.children[ i ];
 		if ( obj !== camera) {
-			for( var j = 0; j < obj.geometry.vertices.length; j++ ) {
-				if(inBox(startX, startY, endX, endY, obj.geometry.vertices[j])) {
+			for( var j = 0; j < obj.geometry.vertices.length; j++ )
+			{
+				if(inBox(startX, startY, endX, endY, obj.geometry.vertices[j]))
+				{
 					selectedVertices.push(obj.geometry.vertices[j]);
+					selectedGeometry = obj.geometry;
 				}
 			}
 		}
@@ -184,8 +197,9 @@ function inBox(startX, startY, endX, endY, vertex)
 
 	if(position.x > startX && position.x < endX && position.y > startY && position.y < endY)
 	{
-		console.log("fuck me five ways till friday");
+		return true;
 	}
+	return false;
 }
 
 function onMouseWheel( event )
@@ -232,7 +246,7 @@ function init()
 	material.emissive.setHex(0xff0000);
 	
 	distanceX = 500;
-	distanceY = 0;
+	distanceY = -500;
 	distanceZ = 0;
 	for(var i = 0; i < geometry.vertices.length; i++) {
 		geometry.vertices[i].x += distanceX;
@@ -242,10 +256,7 @@ function init()
 	
 	geometry.verticesNeedUpdate = true;
 	var object = new THREE.Mesh( geometry, material );
-
-
 	scene.add( object );
-
 
 	raycaster = new THREE.Raycaster();
 	
