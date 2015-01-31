@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="http://localhost/SBHacksClient/server/client_to_server.js"></script>
+<script src="http://localhost/SBHacksClient/libs/three.js"></script>
+<script>
+    $(document).ready(function(){
+        $("button").click(function(){
+			var point = new THREE.Vector3(4,5,6);
+			var array = [1,2,3];
+			alert(point + ", " + array);
+           translatePoints.apply(this, [array, point]);
+        });
+    });
+
+</script>
+
+</head>
+<body>
+
+<button>Send an HTTP POST request to a page and get the result back</button>
+
+</body>
+</html>
+
