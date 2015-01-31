@@ -90,12 +90,33 @@ function onMouseMove( event )
 	{
 		if(CURRENT_MODE == modeEnum.EDIT_MODE)
 		{
-			for(var i = 0 ; i < selectedVertices.length; i ++)
+			if(CURRENT_AXIS == axisModeEnum.X)
 			{
-				selectedVertices[i].x += (event.clientX - mouseOld.x) / 40;
+				for(var i = 0 ; i < selectedVertices.length; i ++)
+				{
+					selectedVertices[i].x += (event.clientX - mouseOld.x) / 40;
 
+				}
+				selectedGeometry.verticesNeedUpdate = true;
 			}
-			selectedGeometry.verticesNeedUpdate = true;
+			else if(CURRENT_AXIS == axisModeEnum.Y)
+			{
+				for(var i = 0 ; i < selectedVertices.length; i ++)
+				{
+					selectedVertices[i].y -= (event.clientY - mouseOld.y) / 40;
+
+				}
+				selectedGeometry.verticesNeedUpdate = true;
+			}
+			else if(CURRENT_AXIS == axisModeEnum.Z)
+			{
+				for(var i = 0 ; i < selectedVertices.length; i ++)
+				{
+					selectedVertices[i].z+= (event.clientX - mouseOld.x) / 40;
+
+				}
+				selectedGeometry.verticesNeedUpdate = true;
+			}
 		}
 		else if(CURRENT_MODE == modeEnum.SELECTION_MODE)
 		{
