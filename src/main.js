@@ -245,6 +245,7 @@ function onMouseMove( event )
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
+					differenceVector.y += 1+(mouse.y - mouseOld.y)*5/window.innerWidth;
 					
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Z)
@@ -271,6 +272,7 @@ function onMouseMove( event )
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
+					differenceVector.z += (mouse.x - mouseOld.x)*5/window.innerWidth;
 				}
 			}
 		}
@@ -709,7 +711,7 @@ function init()
 	//controls.addEventListener('change',render);
 	
 	//grid
-	var size = 500, step = 10;
+	var size = 500, step = 50;
 
 	var geo = new THREE.Geometry();
 	var mat = new THREE.LineBasicMaterial( { color: 0xcccccc, opacity: 0.2 } );
