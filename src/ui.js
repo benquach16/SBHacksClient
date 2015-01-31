@@ -92,7 +92,10 @@ function createUI()
 		{
 			switchTransformMode(transformModeEnum.ROTATE_MODE);
 		}
-	});	
+	});
+
+	var axes = ['X', 'Y', 'Z'];
+	var axeslist = controlsPanel.add( parameters, 'v', axes ).name('Axis');	
 }
 
 

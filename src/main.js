@@ -1,4 +1,5 @@
 var scene, camera, renderer;
+var light;
 var geometry;
 var raycaster;
 var mouse = new THREE.Vector2();
@@ -108,7 +109,7 @@ function onMouseMove( event )
 	}
 	else if(rightMouseDown)
 	{
-		angleX += (event.clientX - mouseOld.x)/window.innerWidth;
+		angleX -= (event.clientX - mouseOld.x)/window.innerWidth;
 		angleY -= (event.clientY - mouseOld.y)/window.innerHeight;
 		camera.rotation.y = angleX * Math.PI/180;
 		camera.rotation.x = angleY * Math.PI/180;
@@ -208,7 +209,7 @@ function onMouseUp( event )
 			for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
 				
 				var obj = scene.children[ i ];
-				if ( obj !== camera)
+				if ( obj !== camera && obj != light)
 				{
 					
 					for( var j = 0; j < obj.geometry.vertices.length; j++ )
@@ -348,7 +349,7 @@ function init()
 	var object = new THREE.Mesh( geometry, material );
 	scene.add( object );
 
-	var light = new THREE.PointLight(0xffffff);
+	light = new THREE.PointLight(0xffffff);
 	light.position.set(-100,150,100);
 	scene.add(light);
 	raycaster = new THREE.Raycaster();
