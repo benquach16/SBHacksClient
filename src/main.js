@@ -112,12 +112,18 @@ function onMouseWheel( event )
 
 function createBox(x,y,z,sizex,sizey,sizez)
 {
-	var geometry = new THREE.BoxGeometry( sizex, sizey, sizez );
+
+	var geometry = new THREE.BoxGeometry( sizex, sizey, sizez);
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 	material.emissive.setHex(0xff0000);
 	var object = new THREE.Mesh(geometry, material);
+	object.position.x = x;
+	object.position.y = y;
+	object.position.z = z;
 	scene.add(object);
 }
+
+
 
 function init()
 {
@@ -136,7 +142,7 @@ function init()
 	var object = new THREE.Mesh( geometry, material );
 
 
-	scene.add( object );
+	//scene.add( object );
 
 
 	raycaster = new THREE.Raycaster();
