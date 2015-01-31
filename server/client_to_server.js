@@ -61,6 +61,7 @@ function receiveCommit(ID)
 		if(msg)
 		{
 			listCommits.push( stringToCommit(msg) );
+			decodeCommit(listCommits[listCommits.length-1]);
 		}
 	});
 }
@@ -85,21 +86,36 @@ function sendCommit(_cmd, _verts1, _verts2, _func){
 
 
 //Function calls
-function translatePoints(arrPoints, translation)
+function translatePoints(edittedGeometry, translation, selectedGeometry)
 {
 	var pointsString = "";
-	for(var i = 0; i < arrPoints.length; i++)
+	for(var i = 0; i < edittedGeometry.verticies.length; i++)
 	{
-		pointsString = "" + arrPoints[i] + ',';
+		pointsString = "" + edittedGeometry.verticies[i].x + ',' + edittedGeometry.verticies[i].y + ',' + edittedGeometry.verticies[i].z + '|';
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
 	alert(arrPoints + ", " + translation);
 	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
 	
-	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, "");
+	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, selectedGeometry);
 }
 
-function scalePoints(arrPoints, scale, origin)
+function decodeCommit(commit)
+{
+	var pointList = [];
+	if(commit[2] == "TRANSLATE_POINTS" || "SCALE_POINTS" || "ROTATE_POINTS")
+	{
+		pointList = commit[3].split("|");
+
+		var translation = commit[4].split(",");
+		alert(pointList + ", " + translation);
+		var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
+		
+		return [commit[2], pointList, translation, commit[5]];
+	}
+}
+
+function scalePoints(arrPoints, scale, selectedGeometry)
 {
 	var pointsString = "";
 	for(var i = 0; i < arrPoints.length; i++)
@@ -110,12 +126,11 @@ function scalePoints(arrPoints, scale, origin)
 	
 	var distanceString = "" + scale.x + ',' + scale.y + ',' + scale.z;
 	
-	var originString = "" + origin.x + ',' + origin.y + ',' + origin.z;
 	
-	sendCommit("SCALE_POINTS", pointsString, distanceString, "");
+	sendCommit("SCALE_POINTS", pointsString, distanceString, selectedGeometry);
 }
 
-function rotatePoints(arrPoints, rotation, origin)
+function rotatePoints(arrPoints, rotation, selectedGeometry)
 {
 	var pointsString = "";
 	for(var i = 0; i < arrPoints.length; i++)
@@ -126,7 +141,6 @@ function rotatePoints(arrPoints, rotation, origin)
 	
 	var distanceString = "" + rotation.x + ',' + rotation.y + ',' + rotation.z;
 	
-	var originString = "" + origin.x + ',' + origin.y + ',' + origin.z;
-	
-	sendCommit("ROTATE_POINTS", pointsString, distanceString, "");
+	sendCommit("ROTATE_POINTS", pointsString, distanceString, selectedGeometry);
 }
+
