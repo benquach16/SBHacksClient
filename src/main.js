@@ -435,7 +435,7 @@ function onMouseUp( event )
 				
 				var vertices = intersects[0].object.geometry.vertices;
 				var normal = selectedFace.normal;
-				normal.multiplyScalar(20);
+				normal.multiplyScalar(extrudetext.extrudeAmount);
 
 				var endA = new THREE.Vector3();
 				endA.x = vertices[selectedFace.a].x + normal.x;
