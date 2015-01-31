@@ -85,11 +85,24 @@ function onMouseMove( event )
 		{
 			if(leftMouseDown)
 			{
-
-				selectedGeometry.position.x += (event.clientX -mouseOld.x) / 20;
-
- 				translatePoints(selectedGeometry.vertices,event.clientX-mouseOld.x);
-				
+				if(CURRENT_AXIS == axisModeEnum.X)
+				{
+					selectedGeometry.position.x += event.clientX -mouseOld.x;
+					var vect = new THREE.Vector3();
+					vect.x = event.clientX - mouseOld.x;
+					vect.y = 0;
+					vect.z = 0;
+ 					translatePoints(selectedGeometry.vertices,vect);
+				}
+				else if(CURRENT_AXIS==axisModeEnum.Y)
+				{
+					selectedGeometry.position.y -= event.clientY - mouseOld.y;
+					
+				}
+				else if(CURRENT_AXIS==axisModeEnum.Z)
+				{
+					
+				}
 			}
 		}
 		//mouseOld.x = event.clientX;	
@@ -344,7 +357,7 @@ function createCylinder(x,y,z,sizex,sizey,sizez)
 }
 
 function init()
-{	
+{
 	//scene initialization code goes here
 	
 	scene = new THREE.Scene();
