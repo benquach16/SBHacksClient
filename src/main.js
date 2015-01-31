@@ -656,7 +656,11 @@ function onMouseUp( event )
 							}
 							else
 							{
-								//ignore it
+								//make sure its the same
+								if(obj == selectedGeometry)
+								{
+									selectedVertices.push(obj.geometry.vertices[j]);
+								}
 							}
 						}
 					}
