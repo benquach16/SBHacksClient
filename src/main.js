@@ -141,7 +141,7 @@ function onMouseUp( event )
 	}
 	//console.log(selectedVertices[0]);
 	//console.log(selectedVertices[1]);
-	//highlightVertices();
+	highlightVertices();
 }
 
 function createVector(x, y, z, camera, width, height) {
