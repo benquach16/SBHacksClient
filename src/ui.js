@@ -25,15 +25,17 @@ function cylinderPanel()
 
 function viewPanel()
 {
+	this.SelectionMode = function(){ switchMode(modeEmum.SELECTION_MODE) };
+	this.EditMode = function(){switchMode(modeEnum.EDIT_MODE)};
 }
 
 function createUI()
 {
-	this.controlsPanel = new dat.GUI();
-
+	var controlsPanel = new dat.GUI();
+	
 	//this.viewsPanel = new dat.GUI();
+	var cube = controlsPanel.addFolder('Create Cube');
 	var ctext = new cubePanel();
-	var cube = this.controlsPanel.addFolder('Create Cube');
 	cube.add(ctext,'X');
 	cube.add(ctext,'Y');
 	cube.add(ctext,'Z');
@@ -41,7 +43,7 @@ function createUI()
 	cube.add(ctext,'SizeY');
 	cube.add(ctext,'SizeZ');
 	cube.add(ctext,'Create');
-	var cylinder = this.controlsPanel.addFolder('Create Cylinder');
+	var cylinder = controlsPanel.addFolder('Create Cylinder');
 	var cyltext = new cylinderPanel();
 	cylinder.add(cyltext,'X');
 	cylinder.add(cyltext,'Y');
@@ -50,6 +52,11 @@ function createUI()
 	cylinder.add(cyltext,'SizeY');
 	cylinder.add(cyltext,'SizeZ');
 	cylinder.add(cyltext,'Create');
+
+	controlsPanel.addFolder('Selection Options');
+	var view = new viewPanel();
+	controlsPanel.add(view, 'SelectionMode');
+	controlsPanel.add(view, 'EditMode');
 }
 
 

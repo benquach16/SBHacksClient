@@ -6,6 +6,8 @@ var mouseOld = new THREE.Vector2();
 var angleX = 0.0;
 var angleY = 0.0;
 
+var globalObjects = [];
+
 var middleMouseDown = false;
 var rightMouseDown = false;
 var leftMouseDown = false;
@@ -16,9 +18,24 @@ var initY;
 var mouseOffset = 24;
 var selectedVertices = [];
 var selectedGeometry;
+
+
+var modeEnum = {
+	SELECTION_MODE : "selection_mode",
+	EDIT_MODE : "edit_mode"
+};
+
+var CURRENT_MODE = modeEnum.SELECTION_MODE;
+
+
 init();
 render();
 onMouseMove(event);
+
+function switchMode( mode )
+{
+	CURRENT_MODE = mode;
+}
 
 function onMouseMove( event )
 {
@@ -82,14 +99,7 @@ function onMouseDown( event )
 	initY = pos.y;
 	startX = event.clientX;
 	startY = event.clientY;
-	var intersects = raycaster.intersectObjects(scene.children);
-	for( var i in intersects)
-	{
-		if(intersects.length > 0)
-		{
 
-		}
-	}	
 
 	if(event.button == 0)
 	{
@@ -120,6 +130,21 @@ function onMouseUp( event )
 
 	if(event.button == 0)
 	{
+		if(CURRENT_MODE == modeEnum.SELECTION_MODE)
+		{
+			
+			var intersects = raycaster.intersectObjects(scene.children);
+			if(intersects.length > 0)
+			{
+				selectedGeometry = intersects[0].object;
+				selectedGeometry.material.emissive.setHex(0xff0000);
+			}
+			else
+			{
+				selectedGeometry.material.emissive.setHex(0x999999);
+				selectedGeometry = null;
+			}
+		}
 		leftMouseDown = false;
 	}
 	else if(event.button == 1)
@@ -141,7 +166,9 @@ function onMouseUp( event )
 	for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
 	
 		var obj = scene.children[ i ];
-		if ( obj !== camera) {
+		if ( obj !== camera)
+		{
+			
 			for( var j = 0; j < obj.geometry.vertices.length; j++ )
 			{
 				if(inBox(startX, startY, endX, endY, obj.geometry.vertices[j]))
@@ -223,7 +250,7 @@ function createBox(x,y,z,sizex,sizey,sizez)
 
 	var geometry = new THREE.BoxGeometry( sizex, sizey, sizez);
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
-	material.emissive.setHex(0xff0000);
+	material.emissive.setHex(0x999999);
 	var object = new THREE.Mesh(geometry, material);
 	object.position.x = x;
 	object.position.y = y;
@@ -243,10 +270,10 @@ function init()
 
 	geometry = new THREE.BoxGeometry( 200, 200, 200 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
-	material.emissive.setHex(0xff0000);
+	material.emissive.setHex(0x999999);
 	
 	distanceX = 500;
-	distanceY = -500;
+	distanceY = 0;
 	distanceZ = 0;
 	for(var i = 0; i < geometry.vertices.length; i++) {
 		geometry.vertices[i].x += distanceX;
@@ -258,10 +285,14 @@ function init()
 	var object = new THREE.Mesh( geometry, material );
 	scene.add( object );
 
+
+	var light = new THREE.PointLight(0xffffff);
+	light.position.set(-100,150,100);
+	scene.add(light);
 	raycaster = new THREE.Raycaster();
 	
 	renderer = new THREE.WebGLRenderer();
-	renderer.setClearColor( 0xf0f0f0 );
+	renderer.setClearColor( 0x454545 );
 	renderer.setPixelRatio( window.devicePixelRatio );
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
@@ -392,7 +423,18 @@ function highlightVertices() {
       size: 20
     });
 	for(var i = 0; i < selectedVertices.length; i++ ) {
-		
+		var radius   = 100,
+			segments = 64,
+			material = new THREE.LineBasicMaterial( { color: 0x0000ff } ),
+			geometry = new THREE.CircleGeometry( radius, segments );
+
+		// Remove center vertex
+		geometry.vertices.shift();
+		var obj = new THREE.Line( geometry, material )
+		obj.position.x = selectedVertices[i].x;
+		obj.position.y = selectedVertices[i].y;
+		obj.position.z = selectedVertices[i].z;
+		scene.add(obj  );
 	}
 	
 }
