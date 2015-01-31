@@ -12,9 +12,10 @@ function init()
 	camera.position.z = 1000;
 
 	geometry = new THREE.BoxGeometry( 200, 200, 200 );
-	material = new THREE.MeshBasicMaterial( { color: 0xff0000} );
+	material = new THREE.MeshLambertMaterial( { color: 0xff0000} );
+	material.emissive.setHex(0xff0000);
 	//wireframe for testing
-    material.wireframe = true;
+    //material.wireframe = true;
 	
 	//move vertices
 	move(0,500,0);
@@ -23,6 +24,7 @@ function init()
 	scene.add( mesh );
 
 	renderer = new THREE.WebGLRenderer();
+	renderer.setClearColor(0xf0f0f0);
 	renderer.setSize( window.innerWidth, window.innerHeight );
 
 	document.body.appendChild( renderer.domElement );
