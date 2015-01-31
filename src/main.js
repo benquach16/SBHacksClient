@@ -282,6 +282,32 @@ function onMouseUp( event )
 			//console.log(selectedVertices[1]);
 			highlightVertices();
 		}
+		else if(CURRENT_MODE == modeEnum.EXTRUDE_MODE)
+		{
+			//pick a face
+			var intersects = raycaster.intersectObjects(scene.children);
+			if(intersects.length > 0)
+			{
+				console.log("WHAT YEAR IS IT");
+				selectedFace = intersects[0].face;
+				selectedFace.color = new THREE.Color(0xeeff00);
+				var pts = [];
+				var vertices = intersects[0].object.geometry.vertices;
+				pts.push(vertices[selectedFace.a]);
+				pts.push(vertices[selectedFace.b]);
+				pts.push(vertices[selectedFace.c]);
+				console.log(vertices[selectedFace.a]);
+				console.log(vertices[selectedFace.b]);
+				console.log(vertices[selectedFace.c]);
+				var shape = new THREE.Shape( pts );
+				var extrudeSettings = {
+					amount: 20,
+					steps: 1
+				};
+
+				var geometry = new THREE.ExtrudeGeometry( shape, extrudeSettings );
+			}			
+		}
 		leftMouseDown = false;
 	}
 	else if(event.button == 1)
