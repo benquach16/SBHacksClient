@@ -110,6 +110,15 @@ function onMouseWheel( event )
 	camera.position.z -= delta*7;
 }
 
+function createBox(x,y,z,sizex,sizey,sizez)
+{
+	var geometry = new THREE.BoxGeometry( sizex, sizey, sizez );
+	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
+	material.emissive.setHex(0xff0000);
+	var object = new THREE.Mesh(geometry, material);
+	scene.add(object);
+}
+
 function init()
 {
 
