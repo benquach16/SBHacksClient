@@ -75,6 +75,12 @@ function onMouseUp( event )
 	}
 }
 
+function onDocumentMouseWheel( event )
+{
+	console.log("fuck");
+	camera.position.z -= event.wheelDeltaY*500;
+}
+
 function init()
 {
 
@@ -112,6 +118,7 @@ function render()
 	requestAnimationFrame( render );
 	addEventListener('mousemove', onMouseMove, false);
 	addEventListener('mousedown', onMouseDown, false);
+	addEventListener('mousewheel', onDocumentMouseWheel, false);
 	addEventListener('mouseup',onMouseUp, false);
 	var intersects = raycaster.intersectObjects(scene.children);
 
