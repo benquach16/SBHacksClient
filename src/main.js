@@ -25,8 +25,14 @@ var modeEnum = {
 	EDIT_MODE : "edit_mode"
 };
 
-var CURRENT_MODE = modeEnum.SELECTION_MODE;
+var transformModeEnum = {
+	TRANSLATE_MDOE : "translate_mode",
+	SCALE_MODE: "scale_mode",
+	ROTATE_MODE: "rotate_mode"
+};
 
+var CURRENT_MODE = modeEnum.SELECTION_MODE;
+var CURRENT_TRANSFORM_MODE = transformModeEnum.TRANSLATE_MODE;
 
 init();
 render();
@@ -34,15 +40,13 @@ onMouseMove(event);
 
 function switchMode( mode )
 {
-	if(mode == modeEnum.EDIT_MODE)
-	{
-		//make sure we have something selected
-		
-		if(selectedGeometry != null)
-			CURRENT_MODE = mode;
-	}
-	else
-		CURRENT_MODE = mode;
+
+	CURRENT_MODE = mode;
+}
+
+function switchTransformMode( mode )
+{
+	CURRENT_TRANSFORM_MODE = mode;
 }
 
 function onMouseMove( event )
@@ -66,17 +70,18 @@ function onMouseMove( event )
 			{
 				selectedVertices[i].x += event.clientX - mouseOld.x;
 
-
 			}
-			mouseOld.x = event.clientX;	
 			selectedGeometry.verticesNeedUpdate = true;
 		}
 		else if(CURRENT_MODE == modeEnum.SELECTION_MODE)
 		{
 			if(leftMouseDown)
 			{
-				selectedGeometry.position.x += event.clientX - mouseOld.x;
-				mouseOld.x = event.clientX;
+
+				selectedGeometry.position.x += event.clientX -mouseOld.x;
+
+ 				//translatePoints(selectedGeometry.vertices,event.clientX-mouseOld.x);
+				
 			}
 		}
 	}
@@ -156,6 +161,7 @@ function onMouseDown( event )
 	}
 } 
 
+
 function onMouseUp( event )
 {
 
@@ -170,14 +176,7 @@ function onMouseUp( event )
 				selectedGeometry = intersects[0].object;
 				selectedGeometry.material.emissive.setHex(0xff0000);
 			}
-			else
-			{
-				if(selectedGeometry != null)
-				{
-					selectedGeometry.material.emissive.setHex(0x999999);
-					selectedGeometry = null;
-				}
-			}
+
 		}
 		else if(CURRENT_MODE == modeEnum.EDIT_MODE)
 		{

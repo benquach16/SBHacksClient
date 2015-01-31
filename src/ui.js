@@ -23,10 +23,17 @@ function cylinderPanel()
 	this.Create = function(){};
 }
 
-function viewPanel()
+function modePanel()
 {
-	this.SelectionMode = function(){ switchMode(modeEnum.SELECTION_MODE) };
-	this.EditMode = function(){switchMode(modeEnum.EDIT_MODE)};
+	this.v = 0;
+}
+
+function modeChange(newMode)
+{
+}
+
+function transformChange(newTransform)
+{
 }
 
 function createUI()
@@ -53,10 +60,39 @@ function createUI()
 	cylinder.add(cyltext,'SizeZ');
 	cylinder.add(cyltext,'Create');
 
-	controlsPanel.addFolder('Selection Options');
-	var view = new viewPanel();
-	controlsPanel.add(view, 'SelectionMode');
-	controlsPanel.add(view, 'EditMode');
+	var modes = ['Selection Mode', 'Edit Mode'];
+	var parameters = new modePanel();
+	var modelist = controlsPanel.add( parameters, 'v', modes ).name('Mode');
+	modelist.onChange(function(value)
+	{
+		if(value == 'Selection Mode')
+		{
+			switchMode(modeEnum.SELECTION_MODE);
+		}
+		else if(value == 'Edit Mode')
+		{
+			switchMode(modeEnum.EDIT_MODE);			
+		}
+		
+	});
+	
+	var transforms = ['Translate', 'Scale', 'Rotate'];
+	var transformlist = controlsPanel.add( parameters, 'v', transforms ).name('Transform');
+	transformlist.onChange(function(value)
+	{
+		if(value == 'Translate')
+		{
+			switchTransformMode(transformModeEnum.TRANSLATE_MODE);
+		}
+		else if(value == 'Scale')
+		{
+			switchTransformMode(transformModeEnum.SCALE_MODE);			
+		}
+		else if(value == 'Rotate')
+		{
+			switchTransformMode(transformModeEnum.ROTATE_MODE);
+		}
+	});	
 }
 
 
