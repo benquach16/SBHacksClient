@@ -218,7 +218,7 @@ function onMouseMove( event )
 					vect.x = mouse.x - mouseOld.x;
 					vect.y = 0;
 					vect.z = 0;
-					differenceVector.x += vect.x;
+					differenceVector.x += 1+(mouse.x - mouseOld.x)*5/window.innerWidth;
  					//translatePoints(selectedGeometry.geometry.vertices,vect,allObjects.indexOf(selectedGeometry.geometry));
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
