@@ -17,7 +17,7 @@ var initX;
 var initY;
 var mouseOffset = 24;
 var selectedVertices = [];
-var selectedGeometry;
+var selectedGeometry = null;
 
 
 var modeEnum = {
@@ -49,14 +49,19 @@ function onMouseMove( event )
 		drawBoundBox(event);
 	}
 
+
+	if(selectedGeometry != null)
+	{
 		for(var i = 0 ; i < selectedVertices.length; i ++)
 		{
 			selectedVertices[i].x += event.clientX - mouseOld.x;
 
 
 		}
-				selectedGeometry.verticesNeedUpdate = true;
-	mouseOld.x = event.clientX;	
+		//mouseOld.x = event.clientX;	
+		selectedGeometry.verticesNeedUpdate = true;
+	}
+
 	if(middleMouseDown)
 	{
 		camera.position.x -= event.clientX - mouseOld.x;
@@ -142,8 +147,11 @@ function onMouseUp( event )
 			}
 			else
 			{
-				selectedGeometry.material.emissive.setHex(0x999999);
-				selectedGeometry = null;
+				if(selectedGeometry != null)
+				{
+					selectedGeometry.material.emissive.setHex(0x999999);
+					selectedGeometry = null;
+				}
 			}
 		}
 		leftMouseDown = false;
@@ -164,6 +172,7 @@ function onMouseUp( event )
 	// var endY = pos.y;
 	endX = event.clientX;
 	endY = event.clientY;
+	
 	for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
 	
 		var obj = scene.children[ i ];
@@ -285,7 +294,6 @@ function init()
 	geometry.verticesNeedUpdate = true;
 	var object = new THREE.Mesh( geometry, material );
 	scene.add( object );
-
 
 	var light = new THREE.PointLight(0xffffff);
 	light.position.set(-100,150,100);
