@@ -10,8 +10,8 @@ var middleMouseDown = false;
 var rightMouseDown = false;
 //bounding box
 var boundBox;
-var startX;
-var startY;
+var initX;
+var initY;
 var mouseOffset = 24;
 var selectedVertices = [];
 
@@ -69,8 +69,8 @@ function onMouseDown( event )
 	var pos = getMousePos(event);
 	pos.x -= mouseOffset;
 	pos.y += mouseOffset;
-	startX = pos.x;
-	startY = pos.y;
+	initX = pos.x;
+	initY = pos.y;
 	startX = event.clientX;
 	startY = event.clientY;
 	var intersects = raycaster.intersectObjects(scene.children);
@@ -123,9 +123,9 @@ function onMouseUp( event )
 	boundBox = false;
 	//remove bounding box
 	scene.remove( scene.getObjectByName("boundBox") );
-	var pos = getMousePos(event);
-	var endX = pos.x;
-	var endY = pos.y;
+	// var pos = getMousePos(event);
+	// var endX = pos.x;
+	// var endY = pos.y;
 	endX = event.clientX;
 	endY = event.clientY;
 	for ( var i = scene.children.length - 1; i >= 0 ; i -- ) {
@@ -315,11 +315,11 @@ function drawBoundBox( event ) {
 	});
 	 var geo = new THREE.Geometry();
 	 
-	geo.vertices.push(new THREE.Vector3(startX, startY, 0));
-	geo.vertices.push(new THREE.Vector3(startX, pos.y, 0));
+	geo.vertices.push(new THREE.Vector3(initX, initY, 0));
+	geo.vertices.push(new THREE.Vector3(initX, pos.y, 0));
 	geo.vertices.push(new THREE.Vector3(pos.x, pos.y, 0));
-	geo.vertices.push(new THREE.Vector3(pos.x, startY, 0));
-	geo.vertices.push(new THREE.Vector3(startX, startY, 0));
+	geo.vertices.push(new THREE.Vector3(pos.x, initY, 0));
+	geo.vertices.push(new THREE.Vector3(initX, initY, 0));
 	
 	//console.log("x " + event.clientX);
 	//console.log(event.clientY);
