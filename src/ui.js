@@ -35,7 +35,6 @@ function desc()
 
 function extrudePanel()
 {
-	this.PickFace = function(){};
 	this.extrudeAmount = 20;
 	this.Extrude = function() {};
 	

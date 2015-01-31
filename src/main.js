@@ -447,7 +447,11 @@ function onMouseUp( event )
 				endC.x = vertices[selectedFace.c].x + normal.x;
 				endC.y = vertices[selectedFace.c].y + normal.y;
 				endC.z = vertices[selectedFace.c].z + normal.z;
+
+				/*
+				
 				var geometry = new THREE.Geometry();
+				
 				geometry.vertices.push(
 					endA,
 					endB,
@@ -466,12 +470,58 @@ function onMouseUp( event )
 				var material = new THREE.MeshLambertMaterial( { color: 0x999999 } );
 				material.emissive.setHex(0x999999);
 				geometry.computeBoundingSphere();
-				
-				var material = new THREE.MeshBasicMaterial( { color: 0x999999 } );
-				geometry.computeBoundingSphere();
 				var mesh = new THREE.Mesh(geometry, material);
+				scene.add(mesh);*/
 
-				scene.add(mesh);
+				
+				var material = new THREE.MeshLambertMaterial( { color: 0x999999 } );
+				
+				var geo = new THREE.Geometry();
+				
+				for(var i = 0; i < intersects[0].object.geometry.vertices.length; i++)
+				{
+					var n = new THREE.Vector3();
+					n.x = intersects[0].object.geometry.vertices[i].x;
+					n.y = intersects[0].object.geometry.vertices[i].y;
+					n.z = intersects[0].object.geometry.vertices[i].z;
+					geo.vertices.push(n);
+				}
+				
+				for(var i = 0; i < intersects[0].object.geometry.faces.length; i++)
+				{
+					var n = new THREE.Face3();
+					n.a = intersects[0].object.geometry.faces[i].a;
+					n.b = intersects[0].object.geometry.faces[i].b;
+					n.c = intersects[0].object.geometry.faces[i].c;
+					n.normal = intersects[0].object.geometry.faces[i].normal;
+					geo.faces.push(n);
+					}
+				
+				var len = geo.vertices.length;
+
+				geo.vertices.push(
+					endA,
+					endB,
+					endC,
+					vertices[selectedFace.a],
+					vertices[selectedFace.b],
+					vertices[selectedFace.c]);
+
+				geo.faces.push(new THREE.Face3(len,len+1,len+2));
+				geo.faces.push(new THREE.Face3(len+1,len+0,len+4));
+				geo.faces.push(new THREE.Face3(len+4,len+0,len+3));
+				geo.faces.push(new THREE.Face3(len+0,len+2,len+3));
+				geo.faces.push(new THREE.Face3(len+3,len+2,len+5));
+				geo.faces.push(new THREE.Face3(len+2,len+1,len+5));
+				geo.faces.push(new THREE.Face3(len+5,len+1,len+4));				
+				console.log(geo.vertices.length);
+
+				geo.computeFaceNormals();
+				geo.computeVertexNormals();
+				var newMesh = new THREE.Mesh(geo,material);
+
+				scene.remove(intersects[0].object);
+				scene.add(newMesh);
 			}			
 		}
 		leftMouseDown = false;
@@ -592,10 +642,11 @@ function init()
 	
 	camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 	camera.position.z = 1000;
-
-	geometry = new THREE.BoxGeometry( 200, 200, 200 );
 	var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 	material.emissive.setHex(0x999999);
+
+	geometry = new THREE.BoxGeometry( 200, 200, 200 );
+
 	
 	distanceX = 0;
 	distanceY = 0;
@@ -605,8 +656,12 @@ function init()
 		geometry.vertices[i].y += distanceY;
 		geometry.vertices[i].z += distanceZ;
 	}
+
+	
 	
 	geometry.verticesNeedUpdate = true;
+
+	
 	var object = new THREE.Mesh( geometry, material );
 	scene.add(object);
 	allObjects.push(object);
