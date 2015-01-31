@@ -25,6 +25,8 @@ var selectedFace = null;
 
 var allObjects = [];
 
+var differenceVector = new THREE.Vector3();
+
 
 var modeEnum = {
 	SELECTION_MODE : "selection_mode",
@@ -216,7 +218,7 @@ function onMouseMove( event )
 					vect.x = mouse.x - mouseOld.x;
 					vect.y = 0;
 					vect.z = 0;
-
+					differenceVector.x += vect.x;
  					//translatePoints(selectedGeometry.geometry.vertices,vect,allObjects.indexOf(selectedGeometry.geometry));
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
@@ -379,6 +381,16 @@ function onMouseUp( event )
 
 	if(event.button == 0)
 	{
+
+		//reset the difference vector so we know how much changed
+		if(selectedGeometry != null)
+		{
+ 			translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
+			console.log(differenceVector.x);
+		}
+		differenceVector.x = 0;
+		differenceVector.y = 0;
+		differenceVector.z = 0;
 		if(CURRENT_MODE == modeEnum.SELECTION_MODE)
 		{
 			
@@ -399,8 +411,6 @@ function onMouseUp( event )
 					}
 				}
 			}
-
-
 		}
 		else if(CURRENT_MODE == modeEnum.EDIT_MODE)
 		{
@@ -534,8 +544,11 @@ function onMouseUp( event )
 				geo.computeFaceNormals();
 				geo.computeVertexNormals();
 				var newMesh = new THREE.Mesh(geo,material);
+				//try to replace the ID here !!!!
+				var index = allObjects.indexOf(intersects[0].object);
 
 				scene.remove(intersects[0].object);
+				allObjects[index] = newMesh;
 				scene.add(newMesh);
 			}			
 		}
