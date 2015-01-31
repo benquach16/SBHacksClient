@@ -429,9 +429,18 @@ function onMouseUp( event )
 				var normal = selectedFace.normal;
 				normal.multiplyScalar(20);
 
-				var endA = vertices[selectedFace.a].add(normal);
-				var endB = vertices[selectedFace.b].add(normal);
-				var endC = vertices[selectedFace.c].add(normal);
+				var endA = new THREE.Vector3();
+				endA.x = vertices[selectedFace.a].x + normal.x;
+				endA.y = vertices[selectedFace.a].y + normal.y;
+				endA.z = vertices[selectedFace.a].z + normal.z;
+				var endB = new THREE.Vector3();
+				endB.x = vertices[selectedFace.b].x + normal.x;
+				endB.y = vertices[selectedFace.b].y + normal.y;
+				endB.z = vertices[selectedFace.b].z + normal.z;
+				var endC = new THREE.Vector3();
+				endC.x = vertices[selectedFace.c].x + normal.x;
+				endC.y = vertices[selectedFace.c].y + normal.y;
+				endC.z = vertices[selectedFace.c].z + normal.z;
 				var geometry = new THREE.Geometry();
 				geometry.vertices.push(
 					endA,
@@ -441,11 +450,17 @@ function onMouseUp( event )
 					vertices[selectedFace.b],
 					vertices[selectedFace.c]);
 				
-				geometry.faces.push(new THREE.Face3(0,4,2));
-				//geometry.faces.push(new THREE.Face3(0,4,2));
-				
-				var material = new THREE.MeshBasicMaterial( { color: 0x999999 } );
+				geometry.faces.push(new THREE.Face3(0,1,2));
+				geometry.faces.push(new THREE.Face3(1,0,4));
+				geometry.faces.push(new THREE.Face3(4,0,3));
+				geometry.faces.push(new THREE.Face3(0,2,3));
+				geometry.faces.push(new THREE.Face3(3,2,5));
+				geometry.faces.push(new THREE.Face3(2,1,5));
+				geometry.faces.push(new THREE.Face3(5,1,4));
+				var material = new THREE.MeshLambertMaterial( { color: 0x999999 } );
+				material.emissive.setHex(0x999999);
 				geometry.computeBoundingSphere();
+				
 				var mesh = new THREE.Mesh(geometry, material);
 
 				scene.add(mesh);
