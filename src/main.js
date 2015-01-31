@@ -86,7 +86,7 @@ function onMouseMove( event )
 			if(leftMouseDown)
 			{
 
-				selectedGeometry.position.x += event.clientX -mouseOld.x;
+				selectedGeometry.position.x += (event.clientX -mouseOld.x) / 20;
 
  				//translatePoints(selectedGeometry.vertices,event.clientX-mouseOld.x);
 				
@@ -331,7 +331,7 @@ function createBox(x,y,z,sizex,sizey,sizez)
 
 
 function init()
-{
+{	
 	//scene initialization code goes here
 	
 	scene = new THREE.Scene();
@@ -370,6 +370,24 @@ function init()
 	createUI();
 	//var controls = new THREE.OrbitControls(camera);
 	//controls.addEventListener('change',render);
+	
+	//grid
+	var size = 500, step = 10;
+
+	var geo = new THREE.Geometry();
+	var mat = new THREE.LineBasicMaterial( { color: 0xcccccc, opacity: 0.2 } );
+
+	for ( var i = -size; i <= size; i += step ) {
+
+		geo.vertices.push( new THREE.Vector3( -size, 0, i ) );
+		geo.vertices.push( new THREE.Vector3(   size, 0, i ) );
+
+		geo.vertices.push( new THREE.Vector3( i, 0, -size ) );
+		geo.vertices.push( new THREE.Vector3( i, 0,   size ) );
+	}
+
+	var grid = new THREE.Line( geo, mat, THREE.LinePieces );
+	scene.add( grid );
 }
 
 function render()
