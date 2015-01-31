@@ -143,6 +143,7 @@ function onMouseMove( event )
 				var i = 0;
 				if(CURRENT_AXIS == axisModeEnum.X)
 				{
+					
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						average += selectedVertices[i].x;
@@ -154,6 +155,7 @@ function onMouseMove( event )
 						selectedVertices[i].x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].x += average;
 					}
+					differenceVector.x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Y)
@@ -169,6 +171,7 @@ function onMouseMove( event )
 						selectedVertices[i].y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
 						selectedVertices[i].y += average;
 					}
+					differenceVector.y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Z)
@@ -184,6 +187,7 @@ function onMouseMove( event )
 						selectedVertices[i].z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].z += average;
 					}
+					differenceVector.z *= 1+(mouse.z - mouseOld.z)/window.innerWidth;
 				}
 			}
 			else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
@@ -297,6 +301,7 @@ function onMouseMove( event )
 						{
 							selectedGeometry.geometry.vertices[i].x += (mouse.x - mouseOld.x);
 						}
+						differenceVector.x += (mouse.x - mouseOld.x);
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 					{
@@ -311,6 +316,7 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].x += average;
 						}
+						differenceVector.x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
 					{
@@ -344,11 +350,8 @@ function onMouseMove( event )
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
-					var vect = new THREE.Vector3();
-					vect.x = mouse.x - mouseOld.x;
-					vect.y = 0;
-					vect.z = 0;
-					differenceVector.x += 1+(mouse.x - mouseOld.x)*5/window.innerWidth;
+
+
  					//translatePoints(selectedGeometry.geometry.vertices,vect,allObjects.indexOf(selectedGeometry.geometry));
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
@@ -359,6 +362,7 @@ function onMouseMove( event )
 						{
 							selectedGeometry.geometry.vertices[i].y += (mouse.y - mouseOld.y);
 						}
+						differenceVector.y += (mouse.y - mouseOld.y);
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 					{
@@ -406,7 +410,6 @@ function onMouseMove( event )
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
-					differenceVector.y += 1+(mouse.y - mouseOld.y)*5/window.innerWidth;
 					
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Z)
@@ -417,6 +420,7 @@ function onMouseMove( event )
 						{
 							selectedGeometry.geometry.vertices[i].z += (mouse.x - mouseOld.x);
 						}
+						differenceVector.z += (mouse.x - mouseOld.x);
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 					{
@@ -464,7 +468,6 @@ function onMouseMove( event )
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
-					differenceVector.z += (mouse.x - mouseOld.x)*5/window.innerWidth;
 				}
 			}
 		}
@@ -952,7 +955,10 @@ function init()
 
 	grid = new THREE.Line( geo, mat, THREE.LinePieces );
 	scene.add( grid );
+
+	//setInterval(function () {updateMesh()}, 1000);
 }
+
 
 controls.addEventListener('change', render);
 function render()
