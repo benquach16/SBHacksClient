@@ -87,7 +87,7 @@ function onMouseMove( event )
 			{
 				if(CURRENT_AXIS == axisModeEnum.X)
 				{
-					selectedGeometry.position.x += event.clientX -mouseOld.x;
+					selectedGeometry.position.x += (event.clientX -mouseOld.x)/40;
 					var vect = new THREE.Vector3();
 					vect.x = event.clientX - mouseOld.x;
 					vect.y = 0;
@@ -96,12 +96,12 @@ function onMouseMove( event )
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
 				{
-					selectedGeometry.position.y -= event.clientY - mouseOld.y;
+					selectedGeometry.position.y -= (event.clientY - mouseOld.y)/40;
 					
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Z)
 				{
-					
+					selectedGeometry.position.z += (event.clientY - mouseOld.y)/40;					
 				}
 			}
 		}
