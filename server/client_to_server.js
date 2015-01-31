@@ -101,6 +101,34 @@ function translatePoints(verticies, translation, selectedGeometry)
 	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, selectedGeometry);
 }
 
+function scalePoints(verticies, scale, selectedGeometry)
+{
+	var pointsString = "";
+	for(var i = 0; i < verticies.length; i++)
+	{
+		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
+	}
+	pointsString = pointsString.substr(0,pointsString.length-1);
+	var scaleString = "" + scale.x + ',' + scale.y + ',' + scale.z;
+	//alert(pointsString + ", " + distanceString);
+	
+	sendCommit("SCALE_POINTS", pointsString, scaleString, selectedGeometry);
+}
+
+function rotatePoints(verticies, rotation, selectedGeometry)
+{
+	var pointsString = "";
+	for(var i = 0; i < verticies.length; i++)
+	{
+		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
+	}
+	pointsString = pointsString.substr(0,pointsString.length-1);
+	var rotationString = "" + rotation.x + ',' + rotation.y + ',' + rotation.z;
+	//alert(pointsString + ", " + distanceString);
+	
+	sendCommit("SCALE_POINTS", pointsString, rotationString, selectedGeometry);
+}
+
 function decodeCommit(commit)
 {
 	var pointList = [];
@@ -114,34 +142,16 @@ function decodeCommit(commit)
 		
 		return [commit[2], pointList, translation, commit[5]];
 	}
-}
 
-function scalePoints(arrPoints, scale, selectedGeometry)
-{
 	var pointsString = "";
-	for(var i = 0; i < arrPoints.length; i++)
+	for(var i = 0; i < verticies.length; i++)
 	{
-		pointsString = "" + arrPoints[i] + ',';
+		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
+	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
+	//alert(pointsString + ", " + distanceString);
 	
-	var distanceString = "" + scale.x + ',' + scale.y + ',' + scale.z;
-	
-	
-	sendCommit("SCALE_POINTS", pointsString, distanceString, selectedGeometry);
-}
-
-function rotatePoints(arrPoints, rotation, selectedGeometry)
-{
-	var pointsString = "";
-	for(var i = 0; i < arrPoints.length; i++)
-	{
-		pointsString = "" + arrPoints[i] + ',';
-	}
-	pointsString = pointsString.substr(0,pointsString.length-1);
-	
-	var distanceString = "" + rotation.x + ',' + rotation.y + ',' + rotation.z;
-	
-	sendCommit("ROTATE_POINTS", pointsString, distanceString, selectedGeometry);
+	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, selectedGeometry);
 }
 
