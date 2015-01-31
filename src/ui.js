@@ -39,7 +39,7 @@ function extrudePanel()
 	this.Extrude = function() {};
 	
 }
-
+var extrudetext = new extrudePanel();
 function createUI()
 {
 	var controlsPanel = new dat.GUI();
@@ -65,7 +65,7 @@ function createUI()
 	cylinder.add(cyltext,'Create');
 
 	var extrude = controlsPanel.addFolder('Extrude Menu');
-	var extrudetext = new extrudePanel();
+
 	extrude.add(extrudetext, 'extrudeAmount');
 	extrude.add(extrudetext, 'Extrude');
 

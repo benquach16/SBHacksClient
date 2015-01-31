@@ -48,6 +48,8 @@ var CURRENT_MODE = modeEnum.SELECTION_MODE;
 var CURRENT_TRANSFORM_MODE = transformModeEnum.TRANSLATE_MODE;
 var CURRENT_AXIS = axisModeEnum.X;
 
+var extrude_amnt = extrudetext.extrudeAmount;
+
 init();
 render();
 onMouseMove(event);
@@ -475,11 +477,12 @@ function onMouseUp( event )
 
 				
 				var material = new THREE.MeshLambertMaterial( { color: 0x999999 } );
-				
+				material.emissive.setHex(0x999999);
 				var geo = new THREE.Geometry();
 				
 				for(var i = 0; i < intersects[0].object.geometry.vertices.length; i++)
 				{
+					
 					var n = new THREE.Vector3();
 					n.x = intersects[0].object.geometry.vertices[i].x;
 					n.y = intersects[0].object.geometry.vertices[i].y;
@@ -489,14 +492,17 @@ function onMouseUp( event )
 				
 				for(var i = 0; i < intersects[0].object.geometry.faces.length; i++)
 				{
-					var n = new THREE.Face3();
-					n.a = intersects[0].object.geometry.faces[i].a;
-					n.b = intersects[0].object.geometry.faces[i].b;
-					n.c = intersects[0].object.geometry.faces[i].c;
-					n.normal = intersects[0].object.geometry.faces[i].normal;
-					geo.faces.push(n);
+					if(intersects[0].object.geometry.faces[i] != intersects[0].face)
+					{
+						var n = new THREE.Face3();
+						n.a = intersects[0].object.geometry.faces[i].a;
+						n.b = intersects[0].object.geometry.faces[i].b;
+						n.c = intersects[0].object.geometry.faces[i].c;
+						n.normal = intersects[0].object.geometry.faces[i].normal;
+						geo.faces.push(n);
+					
 					}
-				
+				}
 				var len = geo.vertices.length;
 
 				geo.vertices.push(
