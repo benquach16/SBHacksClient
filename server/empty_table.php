@@ -8,7 +8,7 @@ if (mysqli_connect_errno()) {
 }
 
 $sql = mysqli_query( $con,
-	"truncate ".$_POST["tableName"]
+	"truncate exavqxxu3s"
 	);
 	
 mysqli_close($con);
