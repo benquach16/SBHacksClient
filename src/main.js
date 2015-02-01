@@ -587,22 +587,25 @@ function onMouseDown( event )
 
 function updateMesh ()
 {
-	var commit = checkNewCommits();
-	console.log("CommitsList: " + commitsList);
-	//for(var j = 0; j < commitsList.length; j++ )
-	//{
+	checkNewCommits();
+
+	console.log("commit: " + listCommits);
+	for(var j = 0; j < listCommits.length; j++ )
+	{
 		arrArgs = commit;
 		//arrArgs
 		//2 == CMD
 		//3 == pointArray
 		//4 == Vector3 transformBy
 		//5 == Mesh Index in allObjects
-		if(arrArgs[2] == "TRANSLATE_POINTS")
-		{
+
 			console.log("CMD: " + arrArgs[2]);
 			console.log("pointArray: " + arrArgs[3]);
 			console.log("transformBy: " + arrArgs[4]);
 			console.log("Mesh Index: " + arrArgs[5]);
+
+		if(arrArgs[2] == "TRANSLATE_POINTS")
+		{
 			if(argArgs[3] == "*")
 			{
 				for(var i = 0; i < arrArgs[1].length; i++)
@@ -639,7 +642,8 @@ function updateMesh ()
 				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Add(avg);
 			}
 		}
-	//}
+	}
+	listCommits = [];
 }
 
 function onMouseUp( event )
