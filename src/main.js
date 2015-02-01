@@ -685,6 +685,32 @@ function updateMesh ()
 			}
 			obj.geometry.verticesNeedUpdate = true;
 		}
+		else if(cmd == "ROTATE_POINTS")
+		{
+			var avg = new THREE.Vector3(0,0,0);
+			var obj = scene.children[meshIndex];
+			if(pointArray == "*")
+			{
+				for(var i = 0; i < obj.geometry.vertices.length; i++)
+				{
+					avg.add(obj.geometry.vertices[i]);
+				}
+				avg.x /= obj.geometry.vertices[i].length;
+				avg.y /= obj.geometry.vertices[i].length;
+				avg.z /= obj.geometry.vertices[i].length;
+				for(var i = 0; i < pointArray.length; i++)
+				{
+					obj.geometry.vertices[i].sub(avg);
+
+					obj.geometry.vertices[i].x *= transformBy.x;
+					obj.geometry.vertices[i].y *= transformBy.y;
+					obj.geometry.vertices[i].z *= transformBy.z;
+
+					obj.geometry.vertices[i].add(avg);
+				}
+
+			}			
+		}
 
 	}
 	listCommits = [];
