@@ -619,14 +619,15 @@ function updateMesh ()
 				console.log("And here.");
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[meshIndex].verticies[i].Add(transformBy);
+					scene.getObjectById( meshIndex, true ).geometry.vertices[i].Add(transformBy);
+
 				}
 			}
 			else
 			{
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[meshIndex].verticies[pointArray[i]].Add(transformBy);
+					scene.getObjectById( meshIndex, true ).vertices[pointArray[i]].Add(transformBy);
 				}
 			}
 		}
@@ -691,18 +692,18 @@ function onMouseUp( event )
 				//information packaging function
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
- 					translatePoints("*",differenceVector,allObjects.indexOf(selectedGeometry));
+ 					translatePoints("*",differenceVector,selectedGeometry.id);
 					//console.log(differenceVector.x);
 					//console.log(differenceVector.y);					
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.SCALE_MODE)
 				{
-					scalePoints(selectedGeometry.geometry.vertices, differenceVector, allObjects.indexOf(selectedGeometry));
+					scalePoints(selectedGeometry.geometry.vertices, differenceVector, selectedGeometry.id);
 					
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.ROTATE_MODE)
 				{
-					rotatePoints(selectedGeometry.geometry.vertices, differenceVector, allObject.indexOf(selectedGeometry));
+					rotatePoints(selectedGeometry.geometry.vertices, differenceVector, selectedGeometry.id);
 				}
 			}
 		}
@@ -712,15 +713,15 @@ function onMouseUp( event )
 			{
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
-					translatePoints(vertexindices, differenceVector, allObjects.indexOf(selectedGeometry.geometry));
+					translatePoints(vertexindices, differenceVector, selectedGeometry.id);
 				}
 				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 				{
-					scalePoints(selectedVertices, differenceVector, allObjects.indexOf(selectedGeometry));
+					scalePoints(selectedVertices, differenceVector, selectedGeometry.id);
 				}
 				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
 				{
-					rotatePoints(selectedVertices, differenceVector, allObjects.indexOf(selectedGeometry));					
+					rotatePoints(selectedVertices, differenceVector, selectedGeometry.id);					
 				}
 			}
 		}
