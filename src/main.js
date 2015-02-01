@@ -156,7 +156,7 @@ function onMouseMove( event )
 						selectedVertices[i].x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].x += average;
 					}
-					differenceVector.x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
+					differenceVector.x += (mouse.x - mouseOld.x)/window.innerWidth;
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Y)
@@ -172,7 +172,7 @@ function onMouseMove( event )
 						selectedVertices[i].y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
 						selectedVertices[i].y += average;
 					}
-					differenceVector.y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
+					differenceVector.y += (mouse.y - mouseOld.y)/window.innerWidth;
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Z)
@@ -188,7 +188,7 @@ function onMouseMove( event )
 						selectedVertices[i].z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].z += average;
 					}
-					differenceVector.z *= 1+(mouse.z - mouseOld.z)/window.innerWidth;
+					differenceVector.z += (mouse.z - mouseOld.z)/window.innerWidth;
 				}
 			}
 			else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
@@ -439,7 +439,7 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].z += average;
 						}
-						differenceVector.z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
+						differenceVector.z += (mouse.x - mouseOld.x)/window.innerWidth;
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
 					{
@@ -704,7 +704,6 @@ function onMouseUp( event )
 				//information packaging function
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
-					console.log(scene.children.indexOf(selectedGeometry));
  					translatePoints("*",differenceVector,scene.children.indexOf(selectedGeometry));
 					//console.log(differenceVector.x);
 					//console.log(differenceVector.y);					
