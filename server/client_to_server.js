@@ -8,7 +8,7 @@ var listCommits = [];
 function checkNewCommits()
 {
 	console.log(lastID);
-	receiveCommit(lastID + 1 );
+	receiveCommit(parseInt(lastID) + 1 );
 	var retList = [];
 	for(var i = 0; i < listCommits.length; i++)
 	{
@@ -29,7 +29,9 @@ function checkOldCommits(newID)
 
 function stringToCommit(msg)
 {
-	return msg.split("&");
+	var ret = msg.split("&");
+	ret[1] = parseInt(ret[1]);
+	return ret;
 }
 
 function removeCommit(ID)
@@ -68,7 +70,7 @@ function receiveCommit(ID)
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
 		//alert(msg);
-		if(msg)
+		if(msg != "")
 		{
 			listCommits.push( stringToCommit(msg) );
 			lastID = listCommits[listCommits.length-1][1];
