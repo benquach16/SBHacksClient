@@ -710,12 +710,12 @@ function onMouseUp( event )
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.SCALE_MODE)
 				{
-					scalePoints(selectedGeometry.geometry.vertices, differenceVector, scene.children.indexOf(selectedGeometry));
+					scalePoints("*", differenceVector, scene.children.indexOf(selectedGeometry));
 					
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.ROTATE_MODE)
 				{
-					rotatePoints(selectedGeometry.geometry.vertices, differenceVector, scene.children.indexOf(selectedGeometry));
+					rotatePoints("*", differenceVector, scene.children.indexOf(selectedGeometry));
 				}
 			}
 		}
