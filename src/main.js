@@ -613,8 +613,10 @@ function updateMesh ()
 
 		if(cmd == "TRANSLATE_POINTS")
 		{
+			console.log("It better get here.");
 			if(pointArray == "*")
 			{
+				console.log("And here.");
 				for(var i = 0; i < pointArray.length; i++)
 				{
 					allObjects[meshIndex].verticies[i].Add(transformBy);
