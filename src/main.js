@@ -614,14 +614,15 @@ function updateMesh ()
 		if(cmd == "TRANSLATE_POINTS")
 		{
 			console.log("It better get here.");
+			var obj = scene.children[meshIndex];
 			if(pointArray == "*")
 			{
 				console.log("And here.");
-				var obj = scene.children[meshIndex];
+
 				console.log(obj.geometry.vertices.length);
 				
 
-				for(var i = 0; i < obj.geometry.vertices.length; i++)
+				f+or(var i = 0; i < obj.geometry.vertices.length; i++)
 				{
 					obj.geometry.vertices[i].add(transformBy);
 					
@@ -632,25 +633,26 @@ function updateMesh ()
 			{
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					scene.getObjectById( meshIndex, true ).vertices[pointArray[i]].add(transformBy);
+					obj.vertices[pointArray[i]].add(transformBy);
 				}
 			}
 		}
 		else if(cmd == "SCALE_POINTS")
 		{
 			var avg = THREE.Vector3(0,0,0);
+			var obj = scene.children[meshIndex];
 			if(pointArray == "*")
 			{
-				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
+				for(var i = 0; i < obj.geometry.vertices.length; i++)
 				{
-					avg.add(allObjects[meshIndex].vertices[i]);
+					avg.add(obj.geometry.vertices[i]);
 				}
 				avg.x /= allObjects[meshIndex].vertices[i].length;
 				avg.y /= allObjects[meshIndex].vertices[i].length;
 				avg.z /= allObjects[meshIndex].vertices[i].length;
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[meshIndex].vertices[i].Sub(avg);
+					allObjects[meshIndex].vertices[i].sub(avg);
 
 					allObjects[meshIndex].vertices[i].x *= transformBy.x;
 					allObjects[meshIndex].vertices[i].y *= transformBy.y;
@@ -662,23 +664,24 @@ function updateMesh ()
 			}
 			for(var i = 0; i < pointArray.length; i++)
 			{
-				avg.add(allObjects[meshIndex].vertices[pointArray[i]]);
+				avg.add(obj.geometry.vertices[pointArray[i]]);
 			}
 			avg.x /= pointArray.length;
 			avg.y /= pointArray.length;
 			avg.z /= pointArray.length;
 			for(var i = 0; i < pointArray.length; i++)
 			{
-				allObjects[meshIndex].vertices[pointArray[i]].Sub(avg);
+				obj.geometry.vertices[pointArray[i]].sub(avg);
 
-				allObjects[meshIndex].vertices[pointArray[i]].x *= transformBy.x;
-				allObjects[meshIndex].vertices[pointArray[i]].y *= transformBy.y;
-				allObjects[meshIndex].vertices[pointArray[i]].z *= transformBy.z;
+				obj.geometry.vertices[pointArray[i]].x *= transformBy.x;
+				obj.geometry.vertices[pointArray[i]].y *= transformBy.y;
+				obj.geometry.vertices[pointArray[i]].z *= transformBy.z;
 
-				allObjects[meshIndex].vertices[pointArray[i]].add(avg);
+				obj.geometry.vertices[pointArray[i]].add(avg);
 			}
+			obj.geometry.verticesNeedUpdate = true;
 		}
-		scene.getObjectById(meshIndex,true).geometry.verticesNeedUpdate = true;
+
 	}
 	listCommits = [];
 }
