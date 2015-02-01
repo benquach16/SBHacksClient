@@ -183,6 +183,102 @@ function onMouseMove( event )
 					}
 				}
 			}
+			else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
+			{
+				if(CURRENT_AXIS == axisModeEnum.X)
+				{
+					var avg_x = 0;
+					var avg_y = 0;
+					var avg_z = 0;
+					var i;
+					for(i = 0 ; i < selectedVertices.length; i++) {
+							avg_x += selectedVertices[i].x;
+							avg_y += selectedVertices[i].y;
+							avg_z += selectedVertices[i].z;
+						}
+					avg_x /= i;
+					avg_y /= i;
+					avg_z /= i;
+					
+					var avgVec = new THREE.Vector3(avg_x, avg_y, avg_z);
+					var axis = new THREE.Vector3(1,0,0);
+					var angle = (mouseOld.y - mouse.y)*5/window.innerHeight;
+					
+					var matrix3 = new THREE.Matrix3;
+					matrix3.set(1,0,0,
+							0, Math.cos(angle), -Math.sin(angle),
+							0, Math.sin(angle), Math.cos(angle));
+					
+					
+					for(i = 0; i < selectedVertices.length; i++) {
+						selectedVertices[i].sub(avgVec);
+						selectedVertices[i].applyMatrix3(matrix3);
+						selectedVertices[i].add(avgVec);
+					}
+				}
+				else if(CURRENT_AXIS == axisModeEnum.Y)
+				{
+					var avg_x = 0;
+					var avg_y = 0;
+					var avg_z = 0;
+					var i;
+					for(i = 0 ; i < selectedVertices.length; i++) {
+							avg_x += selectedVertices[i].x;
+							avg_y += selectedVertices[i].y;
+							avg_z += selectedVertices[i].z;
+						}
+					avg_x /= i;
+					avg_y /= i;
+					avg_z /= i;
+					
+					var avgVec = new THREE.Vector3(avg_x, avg_y, avg_z);
+					var axis = new THREE.Vector3(0,1,0);
+					var angle = (mouse.x - mouseOld.x)*5/window.innerWidth;
+					
+					var matrix3 = new THREE.Matrix3;
+					matrix3.set(Math.cos(angle),0,Math.sin(angle),
+							0, 1, 0,
+							-Math.sin(angle), 0, Math.cos(angle));
+					
+					
+					for(i = 0; i < selectedVertices.length; i++) {
+						selectedVertices[i].sub(avgVec);
+						selectedVertices[i].applyMatrix3(matrix3);
+						selectedVertices[i].add(avgVec);
+					}
+				}
+				else if(CURRENT_AXIS == axisModeEnum.Z)
+				{
+					var avg_x = 0;
+					var avg_y = 0;
+					var avg_z = 0;
+					var i;
+					for(i = 0 ; i < selectedVertices.length; i++) {
+							avg_x += selectedVertices[i].x;
+							avg_y += selectedVertices[i].y;
+							avg_z += selectedVertices[i].z;
+						}
+					avg_x /= i;
+					avg_y /= i;
+					avg_z /= i;
+					
+					var avgVec = new THREE.Vector3(avg_x, avg_y, avg_z);
+					var axis = new THREE.Vector3(0,0,1);
+					var angle = (mouse.y - mouseOld.y)*5/window.innerWidth;
+					
+					var matrix3 = new THREE.Matrix3;
+					matrix3.set(Math.cos(angle),-Math.sin(angle),0,
+							Math.sin(angle), Math.cos(angle), 0,
+							0, 0, 1);
+					
+					
+					for(i = 0; i < selectedVertices.length; i++) {
+						selectedVertices[i].sub(avgVec);
+						selectedVertices[i].applyMatrix3(matrix3);
+						selectedVertices[i].add(avgVec);
+					}
+				}
+			}
 		}
 		else if(CURRENT_MODE == modeEnum.SELECTION_MODE)
 		{
@@ -211,6 +307,37 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].x -= average;
 							selectedGeometry.geometry.vertices[i].x *= 1+(mouse.x - mouseOld.x)*5/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].x += average;
+						}
+					}
+					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
+					{
+						var avg_x = 0;
+						var avg_y = 0;
+						var avg_z = 0;
+						var i;
+						for(i = 0 ; i < selectedGeometry.geometry.vertices.length; i++) {
+								avg_x += selectedGeometry.geometry.vertices[i].x;
+								avg_y += selectedGeometry.geometry.vertices[i].y;
+								avg_z += selectedGeometry.geometry.vertices[i].z;
+							}
+						avg_x /= i;
+						avg_y /= i;
+						avg_z /= i;
+						
+						var avgVec = new THREE.Vector3(avg_x, avg_y, avg_z);
+						var axis = new THREE.Vector3(1,0,0);
+						var angle = (mouseOld.y - mouse.y)*5/window.innerHeight;
+						
+						var matrix3 = new THREE.Matrix3;
+						matrix3.set(1,0,0,
+								0, Math.cos(angle), -Math.sin(angle),
+								0, Math.sin(angle), Math.cos(angle));
+						
+						
+						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++) {
+							selectedGeometry.geometry.vertices[i].sub(avgVec);
+							selectedGeometry.geometry.vertices[i].applyMatrix3(matrix3);
+							selectedGeometry.geometry.vertices[i].add(avgVec);
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
@@ -244,6 +371,37 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].y += average;
 						}
 					}
+					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
+					{
+						var avg_x = 0;
+						var avg_y = 0;
+						var avg_z = 0;
+						var i;
+						for(i = 0 ; i < selectedGeometry.geometry.vertices.length; i++) {
+								avg_x += selectedGeometry.geometry.vertices[i].x;
+								avg_y += selectedGeometry.geometry.vertices[i].y;
+								avg_z += selectedGeometry.geometry.vertices[i].z;
+							}
+						avg_x /= i;
+						avg_y /= i;
+						avg_z /= i;
+						
+						var avgVec = new THREE.Vector3(avg_x, avg_y, avg_z);
+						var axis = new THREE.Vector3(0,1,0);
+						var angle = (mouseOld.x - mouse.x)*5/window.innerWidth;
+						
+						var matrix3 = new THREE.Matrix3;
+						matrix3.set(Math.cos(angle),0,Math.sin(angle),
+								0, 1, 0,
+								-Math.sin(angle), 0, Math.cos(angle));
+						
+						
+						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++) {
+							selectedGeometry.geometry.vertices[i].sub(avgVec);
+							selectedGeometry.geometry.vertices[i].applyMatrix3(matrix3);
+							selectedGeometry.geometry.vertices[i].add(avgVec);
+						}
+					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
 					differenceVector.y += 1+(mouse.y - mouseOld.y)*5/window.innerWidth;
 					
@@ -269,6 +427,37 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].z -= average;
 							selectedGeometry.geometry.vertices[i].z *= (mouse.x - mouseOld.x)*5/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].z += average;
+						}
+					}
+					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
+					{
+						var avg_x = 0;
+						var avg_y = 0;
+						var avg_z = 0;
+						var i;
+						for(i = 0 ; i < selectedGeometry.geometry.vertices.length; i++) {
+								avg_x += selectedGeometry.geometry.vertices[i].x;
+								avg_y += selectedGeometry.geometry.vertices[i].y;
+								avg_z += selectedGeometry.geometry.vertices[i].z;
+							}
+						avg_x /= i;
+						avg_y /= i;
+						avg_z /= i;
+						
+						var avgVec = new THREE.Vector3(avg_x, avg_y, avg_z);
+						var axis = new THREE.Vector3(0,0,1);
+						var angle = (mouseOld.x - mouse.x)*5/window.innerWidth;
+						
+						var matrix3 = new THREE.Matrix3;
+						matrix3.set(Math.cos(angle),-Math.sin(angle),0,
+								Math.sin(angle), Math.cos(angle), 0,
+								0, 0, 1);
+						
+						
+						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++) {
+							selectedGeometry.geometry.vertices[i].sub(avgVec);
+							selectedGeometry.geometry.vertices[i].applyMatrix3(matrix3);
+							selectedGeometry.geometry.vertices[i].add(avgVec);
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
@@ -388,7 +577,7 @@ function onMouseUp( event )
 		if(selectedGeometry != null)
 		{
  			translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
-			console.log(differenceVector.x);
+			//console.log(differenceVector.x);
 		}
 		differenceVector.x = 0;
 		differenceVector.y = 0;
