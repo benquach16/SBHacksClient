@@ -96,6 +96,7 @@ function sendCommit(_cmd, _verts1, _verts2, _func)
 		//error: Utilities.Logger.displayAjaxError
 	}).done(function( msg ) {
 		//alert(msg);
+		msg = parseInt(msg);
 		checkOldCommits(msg);
 	});
 }
