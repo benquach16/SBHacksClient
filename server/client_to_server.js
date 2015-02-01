@@ -7,6 +7,7 @@ var listCommits = [];
 
 function checkNewCommits()
 {
+	console.log(lastID);
 	receiveCommit(lastID + 1 );
 	var retList = [];
 	for(var i = 0; i < listCommits.length; i++)
@@ -23,6 +24,7 @@ function checkOldCommits(newID)
 	{
 		receiveCommit(curID);
 	}
+	lastID = newID;
 }
 
 function stringToCommit(msg)
