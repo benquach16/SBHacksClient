@@ -77,8 +77,8 @@ function onMouseMove( event )
 	// calculate mouse position in normalized device coordinates
 	// (-1 to +1) for both components
 
-	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+	mouse.x = (( event.clientX / window.innerWidth ) * 4 - 1) * window.innerWidth;
+	mouse.y = - (( event.clientY / window.innerHeight ) * 4 + 1) * window.innerHeight;
 	if(boundBox) 
 	{
 		//drawBoundBox(event);
@@ -96,7 +96,7 @@ function onMouseMove( event )
 				{
 					for(var i = 0 ; i < selectedVertices.length; i ++)
 					{
-						selectedVertices[i].x += (event.clientX - mouseOld.x) / 40;
+						selectedVertices[i].x += (mouse.x - mouseOld.x);
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
@@ -105,7 +105,7 @@ function onMouseMove( event )
 				{
 					for(var i = 0 ; i < selectedVertices.length; i ++)
 					{
-						selectedVertices[i].y -= (event.clientY - mouseOld.y) / 40;
+						selectedVertices[i].y -= (mouse.y - mouseOld.y);
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
@@ -114,7 +114,7 @@ function onMouseMove( event )
 				{
 					for(var i = 0 ; i < selectedVertices.length; i ++)
 					{
-						selectedVertices[i].z+= (event.clientX - mouseOld.x) / 40;
+						selectedVertices[i].z+= (mouse.x - mouseOld.x);
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
@@ -135,7 +135,7 @@ function onMouseMove( event )
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						selectedVertices[i].x -= average;
-						selectedVertices[i].x *= 1+(event.clientX - mouseOld.x) / 40;
+						selectedVertices[i].x *= 1+(mouse.x - mouseOld.x);
 						selectedVertices[i].x += average;
 					}
 				}
@@ -150,7 +150,7 @@ function onMouseMove( event )
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						selectedVertices[i].y -= average;
-						selectedVertices[i].y *= 1+(event.clientY - mouseOld.Y) / 40;
+						selectedVertices[i].y *= 1+(mouse.y - mouseOld.Y);
 						selectedVertices[i].y += average;
 					}
 				}
@@ -165,7 +165,7 @@ function onMouseMove( event )
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						selectedVertices[i].z -= average;
-						selectedVertices[i].z *= 1+(event.clientZ - mouseOld.z) / 40;
+						selectedVertices[i].z *= 1+(mouse.x - mouseOld.x);
 						selectedVertices[i].z += average;
 					}
 				}
@@ -183,7 +183,7 @@ function onMouseMove( event )
 					{
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
-							selectedGeometry.geometry.vertices[i].x += (event.clientX - mouseOld.x)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].x += (mouse.x - mouseOld.x)*5/window.innerWidth;
 						}
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
@@ -196,13 +196,13 @@ function onMouseMove( event )
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
 							selectedGeometry.geometry.vertices[i].x -= average;
-							selectedGeometry.geometry.vertices[i].x *= 1+(event.clientX - mouseOld.x)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].x *= 1+(mouse.x - mouseOld.x)*5/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].x += average;
 						}
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
 					var vect = new THREE.Vector3();
-					vect.x = event.clientX - mouseOld.x;
+					vect.x = mouse.x - mouseOld.x;
 					vect.y = 0;
 					vect.z = 0;
 
@@ -214,7 +214,7 @@ function onMouseMove( event )
 					{
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
-							selectedGeometry.geometry.vertices[i].y += 1+(event.clientY - mouseOld.y)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].y += 1+(mouse.y - mouseOld.y)*5/window.innerWidth;
 						}
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
@@ -227,7 +227,7 @@ function onMouseMove( event )
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
 							selectedGeometry.geometry.vertices[i].y -= average;
-							selectedGeometry.geometry.vertices[i].y *= 1+(event.clientY - mouseOld.y)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].y *= 1+(mouse.y - mouseOld.y)*5/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].y += average;
 						}
 					}
@@ -240,7 +240,7 @@ function onMouseMove( event )
 					{
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
-							selectedGeometry.geometry.vertices[i].z += (event.clientZ - mouseOld.z)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].z += (mouse.x - mouseOld.x)*5/window.innerWidth;
 						}
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
@@ -253,7 +253,7 @@ function onMouseMove( event )
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
 							selectedGeometry.geometry.vertices[i].z -= average;
-							selectedGeometry.geometry.vertices[i].z *= (event.clientZ - mouseOld.z)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].z *= (mouse.x - mouseOld.x)*5/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].z += average;
 						}
 					}
@@ -261,7 +261,6 @@ function onMouseMove( event )
 				}
 			}
 		}
-		//mouseOld.x = event.clientX;	
 		selectedGeometry.verticesNeedUpdate = true;
 	}
 
@@ -311,18 +310,24 @@ function onMouseMove( event )
 		camera.position.z = Z;
 		//camera.lookAt(0,0,0);*/
 	}
+
+	console.log(mouse.x + ", " + mouse.y + "   " + mouseOld.x + ", " + mouseOld.y );
+	mouseOld.x = mouse.x;
+	mouseOld.y = mouse.y;
 }
 
 function onMouseDown( event )
 {
 
-
+	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
 	if(event.button == 0)
 	{
 		//left
 		leftMouseDown = true;
-		mouseOld.x = event.clientX;
+
+
 		if(CURRENT_MODE == modeEnum.EDIT_MODE)
 		{
 			boundBox = true;
@@ -343,8 +348,6 @@ function onMouseDown( event )
 		//middle
 		//camera pan
 		middleMouseDown = true;
-		mouseOld.x = event.clientX;
-		mouseOld.y = event.clientY;
 
 	}
 	else if(event.button == 2)
@@ -352,9 +355,10 @@ function onMouseDown( event )
 		//right
 		//camera rotate
 		rightMouseDown = true;
-		mouseOld.x = event.clientX;
-		mouseOld.y = event.clientY;
 	}
+		
+	mouseOld.x = mouse.x;
+	mouseOld.y = mouse.y;
 } 
 
 function onMouseUp( event )
