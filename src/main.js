@@ -617,17 +617,17 @@ function updateMesh ()
 			if(pointArray == "*")
 			{
 				console.log("And here.");
-				var obj = scene.getObjectById(meshIndex, true);
+				var obj = scene.children[meshIndex];
 				console.log(obj.geometry.vertices.length);
 				
-				scene.getObjectById(meshIndex,true).geometry.vertices[0].x += 500;
+				obj.geometry.vertices[0].x += 500;
 				/*
 				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
 				{
 					scene.getObjectById( meshIndex, true ).geometry.vertices[i].add(transformBy);
 					
 					}*/
-				scene.getObjectById(meshIndex,true).geometry.verticesNeedUpdate = true;
+				obj.geometry.verticesNeedUpdate = true;
 			}
 			else
 			{
@@ -698,7 +698,8 @@ function onMouseUp( event )
 				//information packaging function
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
- 					translatePoints("*",differenceVector,selectedGeometry.id);
+					console.log(scene.children.indexOf(selectedGeometry));
+ 					translatePoints("*",differenceVector,scene.children.indexOf(selectedGeometry));
 					//console.log(differenceVector.x);
 					//console.log(differenceVector.y);					
 				}
