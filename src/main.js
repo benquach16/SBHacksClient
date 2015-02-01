@@ -620,7 +620,7 @@ function updateMesh ()
 				for(var i = 0; i < pointArray.length; i++)
 				{
 					scene.getObjectById( meshIndex, true ).geometry.vertices[i].Add(transformBy);
-
+					
 				}
 			}
 			else
@@ -673,7 +673,7 @@ function updateMesh ()
 				allObjects[meshIndex].verticies[pointArray[i]].Add(avg);
 			}
 		}
-		meshIndex.verticesNeedUpdate = true;
+		scene.getObjectById(meshIndex,true).geometry.verticesNeedUpdate = true;
 	}
 	listCommits = [];
 }
