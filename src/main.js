@@ -643,7 +643,7 @@ function updateMesh ()
 		}
 		else if(cmd == "SCALE_POINTS")
 		{
-			var avg = THREE.Vector3(0,0,0);
+			var avg = new THREE.Vector3(0,0,0);
 			var obj = scene.children[meshIndex];
 			if(pointArray == "*")
 			{
@@ -651,18 +651,18 @@ function updateMesh ()
 				{
 					avg.add(obj.geometry.vertices[i]);
 				}
-				avg.x /= allObjects[meshIndex].vertices[i].length;
-				avg.y /= allObjects[meshIndex].vertices[i].length;
-				avg.z /= allObjects[meshIndex].vertices[i].length;
+				avg.x /= obj.geometry.vertices[i].length;
+				avg.y /= obj.geometry.vertices[i].length;
+				avg.z /= obj.geometry.vertices[i].length;
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[meshIndex].vertices[i].sub(avg);
+					obj.geometry.vertices[i].sub(avg);
 
-					allObjects[meshIndex].vertices[i].x *= transformBy.x;
-					allObjects[meshIndex].vertices[i].y *= transformBy.y;
-					allObjects[meshIndex].vertices[i].z *= transformBy.z;
+					obj.geometry.vertices[i].x *= transformBy.x;
+					obj.geometry.vertices[i].y *= transformBy.y;
+					obj.geometry.vertices[i].z *= transformBy.z;
 
-					allObjects[meshIndex].vertices[i].add(avg);
+					obj.geometry.vertices[i].add(avg);
 				}
 
 			}
