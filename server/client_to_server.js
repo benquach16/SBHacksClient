@@ -1,7 +1,7 @@
 //TODO: Make this dynamic
 var TABLE_NAME = "exavqxxu3s";
 var lastID = 0;
-var ip = "10.144.6.101:80";
+var ip = "10.151.6.95:80";
 
 var listCommits = [];
 
