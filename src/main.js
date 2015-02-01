@@ -660,7 +660,7 @@ function updateMesh ()
 				avg.x /= obj.geometry.vertices[i].length;
 				avg.y /= obj.geometry.vertices[i].length;
 				avg.z /= obj.geometry.vertices[i].length;
-				for(var i = 0; i < pointArray.length; i++)
+				for(var i = 0; i < obj.geometry.vertices.length; i++)
 				{
 					obj.geometry.vertices[i].sub(avg);
 
