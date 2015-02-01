@@ -588,6 +588,7 @@ function onMouseDown( event )
 function updateMesh ()
 {
 	var commitsList = checkNewCommits();
+	console.log("CommitsList: " + commitsList);
 	for(var j = 0; j < commitsList.length; j++ )
 	{
 		arrArgs = commitsList[j];
