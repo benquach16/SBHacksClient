@@ -574,6 +574,49 @@ function onMouseDown( event )
 	}
 } 
 
+function updateMesh ()
+{
+	checkNewCommits();
+	for(var j = 0; j < listCommits; j++ )
+	{
+		arrArgs = listCommits[j];
+		//arrArgs
+		//0 == CMD
+		//1 == pointArray
+		//2 == Vector3 transformBy
+		//3 == Mesh Index in allObjects
+		if(arrArgs[0] == "TRANSLATE_POINTS")
+		{
+			for(var i = 0; i < arrArgs[1].length; i++)
+			{
+				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Add(arrArgs[2]);
+			}
+		}
+		else if(arrArgs[0] == "SCALE_POINTS")
+		{
+			var avg = THREE.Vector3(0,0,0);
+			for(var i = 0; i < arrArgs[1].length; i++)
+			{
+				avg.Add(allObjects[arrArgs[3]].verticies[arrArgs[1][i]]);
+			}
+			avg.x /= arrArgs[1].length;
+			avg.y /= arrArgs[1].length;
+			avg.z /= arrArgs[1].length;
+			for(var i = 0; i < arrArgs[2].length; i++)
+			{
+				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Sub(avg);
+
+				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].x *= arrArgs[2].x;
+				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].y *= arrArgs[2].y;
+				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].z *= arrArgs[2].z;
+
+				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Add(avg);
+			}
+		}
+	}
+	listCommits = [];
+}
+
 function onMouseUp( event )
 {
 
