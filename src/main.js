@@ -587,10 +587,10 @@ function onMouseDown( event )
 
 function updateMesh ()
 {
-	checkNewCommits();
+	var commitsList = checkNewCommits();
 
-	console.log("commit: " + listCommits);
-	for(var j = 0; j < listCommits.length; j++ )
+	console.log("commit: " + commitsList);
+	for(var j = 0; j < commitsList.length; j++ )
 	{
 		arrArgs = commit;
 		//arrArgs
