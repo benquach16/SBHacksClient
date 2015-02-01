@@ -619,7 +619,7 @@ function updateMesh ()
 				console.log("And here.");
 				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
 				{
-					scene.getObjectById( meshIndex, true ).geometry.vertices[i].Add(transformBy);
+					scene.getObjectById( meshIndex, true ).geometry.vertices[i].add(transformBy);
 					
 				}
 			}
@@ -627,7 +627,7 @@ function updateMesh ()
 			{
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					scene.getObjectById( meshIndex, true ).vertices[pointArray[i]].Add(transformBy);
+					scene.getObjectById( meshIndex, true ).vertices[pointArray[i]].add(transformBy);
 				}
 			}
 		}
@@ -638,7 +638,7 @@ function updateMesh ()
 			{
 				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
 				{
-					avg.Add(allObjects[meshIndex].vertices[i]);
+					avg.add(allObjects[meshIndex].vertices[i]);
 				}
 				avg.x /= allObjects[meshIndex].vertices[i].length;
 				avg.y /= allObjects[meshIndex].vertices[i].length;
@@ -651,13 +651,13 @@ function updateMesh ()
 					allObjects[meshIndex].vertices[i].y *= transformBy.y;
 					allObjects[meshIndex].vertices[i].z *= transformBy.z;
 
-					allObjects[meshIndex].vertices[i].Add(avg);
+					allObjects[meshIndex].vertices[i].add(avg);
 				}
 
 			}
 			for(var i = 0; i < pointArray.length; i++)
 			{
-				avg.Add(allObjects[meshIndex].vertices[pointArray[i]]);
+				avg.add(allObjects[meshIndex].vertices[pointArray[i]]);
 			}
 			avg.x /= pointArray.length;
 			avg.y /= pointArray.length;
@@ -670,7 +670,7 @@ function updateMesh ()
 				allObjects[meshIndex].vertices[pointArray[i]].y *= transformBy.y;
 				allObjects[meshIndex].vertices[pointArray[i]].z *= transformBy.z;
 
-				allObjects[meshIndex].vertices[pointArray[i]].Add(avg);
+				allObjects[meshIndex].vertices[pointArray[i]].add(avg);
 			}
 		}
 		scene.getObjectById(meshIndex,true).geometry.verticesNeedUpdate = true;
