@@ -617,11 +617,15 @@ function updateMesh ()
 			if(pointArray == "*")
 			{
 				console.log("And here.");
+				console.log(		scene.getObjectById(meshIndex,true).geometry.vertices.length);
+				scene.getObjectById(meshIndex,true).geometry.vertices[0].x += 500;
+				/*
 				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
 				{
 					scene.getObjectById( meshIndex, true ).geometry.vertices[i].add(transformBy);
 					
-				}
+					}*/
+				scene.getObjectById(meshIndex,true).geometry.verticesNeedUpdate = true;
 			}
 			else
 			{
