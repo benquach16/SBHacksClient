@@ -96,7 +96,7 @@ function onMouseMove( event )
 				{
 					for(var i = 0 ; i < selectedVertices.length; i ++)
 					{
-						selectedVertices[i].x += (event.clientX - mouseOld.x) / 40;
+						selectedVertices[i].x += 1+(event.clientX - mouseOld.x)*5/window.innerWidth;
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
@@ -105,7 +105,7 @@ function onMouseMove( event )
 				{
 					for(var i = 0 ; i < selectedVertices.length; i ++)
 					{
-						selectedVertices[i].y -= (event.clientY - mouseOld.y) / 40;
+						selectedVertices[i].y -= 1+(event.clientY - mouseOld.y)*5/window.innerWidth;
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
@@ -114,7 +114,7 @@ function onMouseMove( event )
 				{
 					for(var i = 0 ; i < selectedVertices.length; i ++)
 					{
-						selectedVertices[i].z+= (event.clientX - mouseOld.x) / 40;
+						selectedVertices[i].z+= 1+(event.clientZ - mouseOld.z)*5/window.innerWidth;
 
 					}
 					selectedGeometry.verticesNeedUpdate = true;
@@ -135,7 +135,7 @@ function onMouseMove( event )
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						selectedVertices[i].x -= average;
-						selectedVertices[i].x *= 1+(event.clientX - mouseOld.x) / 40;
+						selectedVertices[i].x *= 1+(event.clientX - mouseOld.x)*5/window.innerWidth;
 						selectedVertices[i].x += average;
 					}
 				}
@@ -150,7 +150,7 @@ function onMouseMove( event )
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						selectedVertices[i].y -= average;
-						selectedVertices[i].y *= 1+(event.clientY - mouseOld.Y) / 40;
+						selectedVertices[i].y *= 1+(event.clientY - mouseOld.y)*5/window.innerWidth;
 						selectedVertices[i].y += average;
 					}
 				}
@@ -165,7 +165,7 @@ function onMouseMove( event )
 					for(i = 0; i < selectedVertices.length; i++)
 					{
 						selectedVertices[i].z -= average;
-						selectedVertices[i].z *= 1+(event.clientZ - mouseOld.z) / 40;
+						selectedVertices[i].z *= 1+(event.clientZ - mouseOld.z)*5/window.innerWidth;
 						selectedVertices[i].z += average;
 					}
 				}
@@ -183,7 +183,7 @@ function onMouseMove( event )
 					{
 						for(i = 0; i < selectedGeometry.geometry.vertices.length; i++)
 						{
-							selectedGeometry.geometry.vertices[i].x += (event.clientX - mouseOld.x)*5/window.innerWidth;
+							selectedGeometry.geometry.vertices[i].x += 1+(event.clientX - mouseOld.x)*5/window.innerWidth;
 						}
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
