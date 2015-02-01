@@ -593,6 +593,13 @@ function updateMesh ()
 	for(var j = 0; j < commitsList.length; j++ )
 	{
 		arrArgs = commitsList[j];
+
+		if(!arrArgs) {return;}
+
+		var cmd = arrArgs[2];
+		var pointArray = arrArgs[3];
+		var transformBy = arrArgs[4];
+		var meshIndex = arrArgs[5];
 		//arrArgs
 		//2 == CMD
 		//3 == pointArray
@@ -604,42 +611,63 @@ function updateMesh ()
 			console.log("transformBy: " + arrArgs[4]);
 			console.log("Mesh Index: " + arrArgs[5]);
 
-		if(arrArgs[2] == "TRANSLATE_POINTS")
+		if(cmd == "TRANSLATE_POINTS")
 		{
-			if(argArgs[3] == "*")
+			if(pointArray == "*")
 			{
-				for(var i = 0; i < arrArgs[1].length; i++)
+				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[arrArgs[5]].verticies[i].Add(arrArgs[4]);
+					allObjects[meshIndex.verticies[i].Add(transformBy);
 				}
 			}
 			else
 			{
-				for(var i = 0; i < arrArgs[1].length; i++)
+				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Add(arrArgs[4]);
+					allObjects[meshIndex].verticies[pointArray[i]].Add(transformBy);
 				}
 			}
 		}
-		else if(arrArgs[2] == "SCALE_POINTS")
+		else if(cmd == "SCALE_POINTS")
 		{
 			var avg = THREE.Vector3(0,0,0);
-			for(var i = 0; i < arrArgs[3].length; i++)
+			if(pointArray == "*")
 			{
-				avg.Add(allObjects[arrArgs[5]].verticies[arrArgs[3][i]]);
+				for(var i = 0; i < pointArray.length; i++)
+				{
+					avg.Add(allObjects[meshIndex].verticies[i]);
+				}
+				avg.x /= allObjects[meshIndex].verticies[i].length;
+				avg.y /= allObjects[meshIndex].verticies[i].length;
+				avg.z /= allObjects[meshIndex].verticies[i].length;
+				for(var i = 0; i < pointArray.length; i++)
+				{
+					allObjects[meshIndex].verticies[i].Sub(avg);
+
+					allObjects[meshIndex].verticies[i].x *= transformBy.x;
+					allObjects[meshIndex].verticies[i].y *= transformBy.y;
+					allObjects[meshIndex].verticies[i].z *= transformBy.z;
+
+					allObjects[meshIndex].verticies[i].Add(avg);
+				}
+
 			}
-			avg.x /= arrArgs[1].length;
-			avg.y /= arrArgs[1].length;
-			avg.z /= arrArgs[1].length;
-			for(var i = 0; i < arrArgs[3].length; i++)
+			for(var i = 0; i < pointArray.length; i++)
 			{
-				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Sub(avg);
+				avg.Add(allObjects[meshIndex].verticies[pointArray[i]]);
+			}
+			avg.x /= pointArray.length;
+			avg.y /= pointArray.length;
+			avg.z /= pointArray.length;
+			for(var i = 0; i < pointArray.length; i++)
+			{
+				allObjects[meshIndex].verticies[pointArray[i]].Sub(avg);
 
-				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].x *= arrArgs[4].x;
-				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].y *= arrArgs[4].y;
-				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].z *= arrArgs[4].z;
+				allObjects[meshIndex].verticies[pointArray[i]].x *= transformBy.x;
+				allObjects[meshIndex].verticies[pointArray[i]].y *= transformBy.y;
+				allObjects[meshIndex].verticies[pointArray[i]].z *= transformBy.z;
 
-				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Add(avg);
+				allObjects[meshIndex].verticies[pointArray[i]].Add(avg);
 			}
 		}
 	}
