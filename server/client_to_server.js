@@ -66,7 +66,8 @@ function receiveCommit(ID)
 	});
 }
 
-function sendCommit(_cmd, _verts1, _verts2, _func){
+function sendCommit(_cmd, _verts1, _verts2, _func)
+{
    $.ajax({
 		url: "http://localhost/SBHacksClient/server/array_edit.php",       
 		type: "POST",
@@ -86,16 +87,17 @@ function sendCommit(_cmd, _verts1, _verts2, _func){
 
 
 //Function calls
-function translatePoints(edittedGeometry, translation, selectedGeometry)
+function translatePoints(verticies, translation, selectedGeometry)
 {
 	var pointsString = "";
-	for(var i = 0; i < edittedGeometry.verticies.length; i++)
+	console.log("i: " + verticies.length);
+	for(var i = 0; i < verticies.length; i++)
 	{
-		pointsString = "" + edittedGeometry.verticies[i].x + ',' + edittedGeometry.verticies[i].y + ',' + edittedGeometry.verticies[i].z + '|';
+		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
-	alert(arrPoints + ", " + translation);
 	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
+	alert(pointsString + ", " + distanceString);
 	
 	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, selectedGeometry);
 }

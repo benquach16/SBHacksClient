@@ -206,7 +206,7 @@ function onMouseMove( event )
 					vect.y = 0;
 					vect.z = 0;
 
- 					//translatePoints(selectedGeometry.geometry.vertices,allObjects.indexOf(selectedGeometry),vect);
+ 					translatePoints(selectedGeometry.geometry.vertices,vect,allObjects.indexOf(selectedGeometry.geometry));
 				}
 				else if(CURRENT_AXIS==axisModeEnum.Y)
 				{
