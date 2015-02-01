@@ -61,7 +61,7 @@ function receiveCommit(ID)
 		if(msg)
 		{
 			listCommits.push( stringToCommit(msg) );
-			decodeCommit(listCommits[listCommits.length-1]);
+			//decodeCommit(listCommits[listCommits.length-1]);
 		}
 	});
 }
@@ -96,7 +96,7 @@ function translatePoints(vertices, translation, selectedGeometry)
 	}
 	else
 	{
-		for(var i = 0; i < verticies.length; i++)
+		for(var i = 0; i < vertices.length; i++)
 		{
 			pointsString += "" + vertices[i] + ", ";
 		}
@@ -118,7 +118,7 @@ function scalePoints(vertices, scale, selectedGeometry)
 	}
 	else
 	{
-		for(var i = 0; i < verticies.length; i++)
+		for(var i = 0; i < vertices.length; i++)
 		{
 			pointsString += "" + vertices[i] + ", ";
 		}
@@ -140,7 +140,7 @@ function rotatePoints(vertices, rotation, selectedGeometry)
 	}
 	else
 	{
-		for(var i = 0; i < verticies.length; i++)
+		for(var i = 0; i < vertices.length; i++)
 		{
 			pointsString += "" + vertices[i] + ", ";
 		}
@@ -168,11 +168,12 @@ function decodeCommit(commit)
 	}
 
 	var pointsString = "";
-	for(var i = 0; i < verticies.length; i++)
+	for(var i = 0; i < vertices.length; i++)
 	{
-		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
+		pointsString = "" + vertices[i] + ", ";
 	}
 	pointsString = pointsString.substr(0,pointsString.length-1);
+
 	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
 	//alert(pointsString + ", " + distanceString);
 	
