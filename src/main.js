@@ -599,7 +599,7 @@ function updateMesh ()
 		var cmd = arrArgs[2];
 		var pointArray = arrArgs[3];
 		var strTransArray = arrArgs[4].split(",");
-		var transformBy = THREE.Vector3();
+		var transformBy = new THREE.Vector3();
 		transformBy.x = parseFloat(strTransArray[0]);
 		transformBy.y = parseFloat(strTransArray[1]);
 		transformBy.z = parseFloat(strTransArray[2]);
