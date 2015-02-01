@@ -19,6 +19,7 @@ var initX;
 var initY;
 var mouseOffset = 24;
 var selectedVertices = [];
+var vertexindices = [];
 var selectedGeometry = null;
 var selectedFace = null;
 
@@ -547,6 +548,7 @@ function onMouseDown( event )
 		{
 			boundBox = true;
 			selectedVertices.length = 0;
+			vertexindices.length  =0;
 			//get intial x and y coords for bounding box
 			var pos = getMousePos(event);
 			pos.x -= mouseOffset;
@@ -718,6 +720,7 @@ function onMouseUp( event )
 							if(selectedGeometry == null)
 							{
 								selectedVertices.push(obj.geometry.vertices[j]);
+								vertexindices.push(j);
 								selectedGeometry = obj;
 								selectedGeometry.material.emissive.setHex(0xff0000);
 							}
@@ -727,6 +730,7 @@ function onMouseUp( event )
 								if(obj == selectedGeometry)
 								{
 									selectedVertices.push(obj.geometry.vertices[j]);
+									vertexindices.push(j);
 								}
 							}
 						}
