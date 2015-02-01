@@ -90,7 +90,6 @@ function sendCommit(_cmd, _verts1, _verts2, _func)
 function translatePoints(verticies, translation, selectedGeometry)
 {
 	var pointsString = "";
-	console.log("i: " + verticies.length);
 	for(var i = 0; i < verticies.length; i++)
 	{
 		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
