@@ -8,6 +8,13 @@ var listCommits = [];
 function checkNewCommits()
 {
 	receiveCommit(lastID + 1 );
+	var retList = [];
+	for(var i = 0; i < listCommits.length; i++)
+	{
+		retList.push(listCommits[i]);
+	}
+	listCommits = [];
+	return retList;
 }
 
 function checkOldCommits(newID)
@@ -63,7 +70,8 @@ function receiveCommit(ID)
 		{
 			listCommits.push( stringToCommit(msg) );
 			lastID = listCommits[listCommits.length-1][1];
-			alert(listCommits[listCommits.length-1]);
+
+			alert(listCommits[listCommits.length-1][1]);
 			//decodeCommit(listCommits[listCommits.length-1]);
 		}
 	});

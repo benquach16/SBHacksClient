@@ -587,10 +587,10 @@ function onMouseDown( event )
 
 function updateMesh ()
 {
-	checkNewCommits();
-	for(var j = 0; j < listCommits.length; j++ )
+	var commitsList = checkNewCommits();
+	for(var j = 0; j < commitsList.length; j++ )
 	{
-		arrArgs = listCommits[j];
+		arrArgs = commitsList[j];
 		//arrArgs
 		//0 == CMD
 		//1 == pointArray
