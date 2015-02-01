@@ -670,6 +670,7 @@ function updateMesh ()
 				allObjects[meshIndex].verticies[pointArray[i]].Add(avg);
 			}
 		}
+		meshIndex.verticesNeedUpdate = true;
 	}
 	listCommits = [];
 }
