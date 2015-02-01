@@ -87,42 +87,66 @@ function sendCommit(_cmd, _verts1, _verts2, _func)
 
 
 //Function calls
-function translatePoints(verticies, translation, selectedGeometry)
+function translatePoints(vertices, translation, selectedGeometry)
 {
 	var pointsString = "";
-	for(var i = 0; i < verticies.length; i++)
+	if(vertices == '*')
 	{
-		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
+		pointsString = "*";
 	}
-	pointsString = pointsString.substr(0,pointsString.length-1);
+	else
+	{
+		for(var i = 0; i < verticies.length; i++)
+		{
+			pointsString += "" + vertices[i] + ", ";
+		}
+		pointsString = pointsString.substr(0,pointsString.length-1);
+	}
+
 	var distanceString = "" + translation.x + ',' + translation.y + ',' + translation.z;
 	//alert(pointsString + ", " + distanceString);
 	
 	sendCommit("TRANSLATE_POINTS", pointsString, distanceString, selectedGeometry);
 }
 
-function scalePoints(verticies, scale, selectedGeometry)
+function scalePoints(vertices, scale, selectedGeometry)
 {
 	var pointsString = "";
-	for(var i = 0; i < verticies.length; i++)
+	if(vertices == '*')
 	{
-		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
+		pointsString = "*";
 	}
-	pointsString = pointsString.substr(0,pointsString.length-1);
+	else
+	{
+		for(var i = 0; i < verticies.length; i++)
+		{
+			pointsString += "" + vertices[i] + ", ";
+		}
+		pointsString = pointsString.substr(0,pointsString.length-1);
+	}
+	
 	var scaleString = "" + scale.x + ',' + scale.y + ',' + scale.z;
 	//alert(pointsString + ", " + distanceString);
 	
 	sendCommit("SCALE_POINTS", pointsString, scaleString, selectedGeometry);
 }
 
-function rotatePoints(verticies, rotation, selectedGeometry)
+function rotatePoints(vertices, rotation, selectedGeometry)
 {
 	var pointsString = "";
-	for(var i = 0; i < verticies.length; i++)
+	if(vertices == '*')
 	{
-		pointsString = "" + verticies[i].x + ',' + verticies[i].y + ',' + verticies[i].z + '|';
+		pointsString = "*";
 	}
-	pointsString = pointsString.substr(0,pointsString.length-1);
+	else
+	{
+		for(var i = 0; i < verticies.length; i++)
+		{
+			pointsString += "" + vertices[i] + ", ";
+		}
+		pointsString = pointsString.substr(0,pointsString.length-1);
+	}
+	
 	var rotationString = "" + rotation.x + ',' + rotation.y + ',' + rotation.z;
 	//alert(pointsString + ", " + distanceString);
 	
