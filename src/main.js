@@ -378,6 +378,7 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].y += average;
 						}
+						differenceVector.y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
 					{
@@ -409,6 +410,8 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].applyMatrix3(matrix3);
 							selectedGeometry.geometry.vertices[i].add(avgVec);
 						}
+
+						differenceVector.y += (mouseOld.x - mouse.x)*5/window.innerWidth;
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
 					
@@ -436,6 +439,7 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 							selectedGeometry.geometry.vertices[i].z += average;
 						}
+						differenceVector.z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 					}
 					else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
 					{
@@ -467,6 +471,8 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].applyMatrix3(matrix3);
 							selectedGeometry.geometry.vertices[i].add(avgVec);
 						}
+
+						differenceVector.z += (mouseOld.x - mouse.x)*5/window.innerWidth;
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
 				}
