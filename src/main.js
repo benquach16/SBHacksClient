@@ -156,7 +156,7 @@ function onMouseMove( event )
 						selectedVertices[i].x *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].x += average;
 					}
-					differenceVector.x += (mouse.x - mouseOld.x)/window.innerWidth;
+					differenceVector.x *= (1+(mouse.x - mouseOld.x)/window.innerWidth);
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Y)
@@ -172,7 +172,7 @@ function onMouseMove( event )
 						selectedVertices[i].y *= 1+(mouse.y - mouseOld.y)/window.innerWidth;
 						selectedVertices[i].y += average;
 					}
-					differenceVector.y += (mouse.y - mouseOld.y)/window.innerWidth;
+					differenceVector.y *= (1+(mouse.y - mouseOld.y)/window.innerHeight);
 				}
 				
 				if(CURRENT_AXIS == axisModeEnum.Z)
@@ -188,7 +188,7 @@ function onMouseMove( event )
 						selectedVertices[i].z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].z += average;
 					}
-					differenceVector.z += (mouse.z - mouseOld.z)/window.innerWidth;
+					differenceVector.z += (1+(mouse.x - mouseOld.x)/window.innerWidth);
 				}
 			}
 			else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
@@ -705,17 +705,24 @@ function onMouseUp( event )
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
  					translatePoints("*",differenceVector,scene.children.indexOf(selectedGeometry));
-					//console.log(differenceVector.x);
-					//console.log(differenceVector.y);					
+					console.log("Translating:");
+					console.log(differenceVector.x);
+					console.log(differenceVector.y);	
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.SCALE_MODE)
 				{
+					console.log("Scaling:");
+					console.log(differenceVector.x);
+					console.log(differenceVector.y);		
 					scalePoints("*", differenceVector, scene.children.indexOf(selectedGeometry));
 					
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.ROTATE_MODE)
 				{
 					rotatePoints("*", differenceVector, scene.children.indexOf(selectedGeometry));
+					console.log("Rotating:");
+					console.log(differenceVector.x);
+					console.log(differenceVector.y);	
 				}
 			}
 		}
