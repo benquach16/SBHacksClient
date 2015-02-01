@@ -617,7 +617,7 @@ function updateMesh ()
 			{
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[meshIndex.verticies[i].Add(transformBy);
+					allObjects[meshIndex].verticies[i].Add(transformBy);
 				}
 			}
 			else
