@@ -617,7 +617,7 @@ function updateMesh ()
 			if(pointArray == "*")
 			{
 				console.log("And here.");
-				for(var i = 0; i < pointArray.length; i++)
+				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
 				{
 					scene.getObjectById( meshIndex, true ).geometry.vertices[i].Add(transformBy);
 					
@@ -636,41 +636,41 @@ function updateMesh ()
 			var avg = THREE.Vector3(0,0,0);
 			if(pointArray == "*")
 			{
-				for(var i = 0; i < pointArray.length; i++)
+				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
 				{
-					avg.Add(allObjects[meshIndex].verticies[i]);
+					avg.Add(allObjects[meshIndex].vertices[i]);
 				}
-				avg.x /= allObjects[meshIndex].verticies[i].length;
-				avg.y /= allObjects[meshIndex].verticies[i].length;
-				avg.z /= allObjects[meshIndex].verticies[i].length;
+				avg.x /= allObjects[meshIndex].vertices[i].length;
+				avg.y /= allObjects[meshIndex].vertices[i].length;
+				avg.z /= allObjects[meshIndex].vertices[i].length;
 				for(var i = 0; i < pointArray.length; i++)
 				{
-					allObjects[meshIndex].verticies[i].Sub(avg);
+					allObjects[meshIndex].vertices[i].Sub(avg);
 
-					allObjects[meshIndex].verticies[i].x *= transformBy.x;
-					allObjects[meshIndex].verticies[i].y *= transformBy.y;
-					allObjects[meshIndex].verticies[i].z *= transformBy.z;
+					allObjects[meshIndex].vertices[i].x *= transformBy.x;
+					allObjects[meshIndex].vertices[i].y *= transformBy.y;
+					allObjects[meshIndex].vertices[i].z *= transformBy.z;
 
-					allObjects[meshIndex].verticies[i].Add(avg);
+					allObjects[meshIndex].vertices[i].Add(avg);
 				}
 
 			}
 			for(var i = 0; i < pointArray.length; i++)
 			{
-				avg.Add(allObjects[meshIndex].verticies[pointArray[i]]);
+				avg.Add(allObjects[meshIndex].vertices[pointArray[i]]);
 			}
 			avg.x /= pointArray.length;
 			avg.y /= pointArray.length;
 			avg.z /= pointArray.length;
 			for(var i = 0; i < pointArray.length; i++)
 			{
-				allObjects[meshIndex].verticies[pointArray[i]].Sub(avg);
+				allObjects[meshIndex].vertices[pointArray[i]].Sub(avg);
 
-				allObjects[meshIndex].verticies[pointArray[i]].x *= transformBy.x;
-				allObjects[meshIndex].verticies[pointArray[i]].y *= transformBy.y;
-				allObjects[meshIndex].verticies[pointArray[i]].z *= transformBy.z;
+				allObjects[meshIndex].vertices[pointArray[i]].x *= transformBy.x;
+				allObjects[meshIndex].vertices[pointArray[i]].y *= transformBy.y;
+				allObjects[meshIndex].vertices[pointArray[i]].z *= transformBy.z;
 
-				allObjects[meshIndex].verticies[pointArray[i]].Add(avg);
+				allObjects[meshIndex].vertices[pointArray[i]].Add(avg);
 			}
 		}
 		scene.getObjectById(meshIndex,true).geometry.verticesNeedUpdate = true;
