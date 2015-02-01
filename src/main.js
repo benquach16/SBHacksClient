@@ -188,7 +188,7 @@ function onMouseMove( event )
 						selectedVertices[i].z *= 1+(mouse.x - mouseOld.x)/window.innerWidth;
 						selectedVertices[i].z += average;
 					}
-					differenceVector.z += (1+(mouse.x - mouseOld.x)/window.innerWidth);
+					differenceVector.z *= (1+(mouse.x - mouseOld.x)/window.innerWidth);
 				}
 			}
 			else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
@@ -539,11 +539,13 @@ function onMouseDown( event )
 
 	mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 	mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-	/*if(!leftMouseDown && !rightMouseDown && !middleMouseDown)
+	if(!leftMouseDown && !rightMouseDown && !middleMouseDown && 
+		CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 	{
-		mouseOld.x = mouse.x;
-		mouseOld.y = mouse.y;
-	}*/
+		differenceVector.x = 1;
+		differenceVector.y = 1;
+		differenceVector.z = 1;
+	}
 	if(event.button == 0)
 	{
 		//left
