@@ -598,6 +598,10 @@ function updateMesh ()
 		//3 == Mesh Index in allObjects
 		if(arrArgs[0] == "TRANSLATE_POINTS")
 		{
+			console.log("CMD: " + arrArgs[0]);
+			console.log("pointArray: " + arrArgs[1]);
+			console.log("transformBy: " + arrArgs[2]);
+			console.log("Mesh Index: " + arrArgs[3]);
 			if(argArgs[1] == "*")
 			{
 				for(var i = 0; i < arrArgs[1].length; i++)
@@ -653,8 +657,8 @@ function onMouseUp( event )
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
  					translatePoints("*",differenceVector,allObjects.indexOf(selectedGeometry));
-					console.log(differenceVector.x);
-					console.log(differenceVector.y);					
+					//console.log(differenceVector.x);
+					//console.log(differenceVector.y);					
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.SCALE_MODE)
 				{
