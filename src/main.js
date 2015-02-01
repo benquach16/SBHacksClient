@@ -223,6 +223,7 @@ function onMouseMove( event )
 						selectedVertices[i].applyMatrix3(matrix3);
 						selectedVertices[i].add(avgVec);
 					}
+					differenceVector.x += (mouseOld.y - mouse.y)*5/window.innerHeight;
 				}
 				else if(CURRENT_AXIS == axisModeEnum.Y)
 				{
@@ -254,6 +255,7 @@ function onMouseMove( event )
 						selectedVertices[i].applyMatrix3(matrix3);
 						selectedVertices[i].add(avgVec);
 					}
+					differenceVector.y += (mouse.x - mouseOld.x)*5/window.innerWidth;
 				}
 				else if(CURRENT_AXIS == axisModeEnum.Z)
 				{
@@ -285,6 +287,7 @@ function onMouseMove( event )
 						selectedVertices[i].applyMatrix3(matrix3);
 						selectedVertices[i].add(avgVec);
 					}
+					differenceVector.z += (mouse.y - mouseOld.y)*5/window.innerWidth;
 				}
 			}
 		}
@@ -349,6 +352,7 @@ function onMouseMove( event )
 							selectedGeometry.geometry.vertices[i].applyMatrix3(matrix3);
 							selectedGeometry.geometry.vertices[i].add(avgVec);
 						}
+						differenceVector.x += (mouseOld.y - mouse.y)*5/window.innerHeight;
 					}
 					selectedGeometry.geometry.verticesNeedUpdate = true;
 
