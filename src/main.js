@@ -587,60 +587,59 @@ function onMouseDown( event )
 
 function updateMesh ()
 {
-	var commitsList = checkNewCommits();
+	var commit = checkNewCommits();
 	console.log("CommitsList: " + commitsList);
-	for(var j = 0; j < commitsList.length; j++ )
-	{
-		arrArgs = commitsList[j];
+	//for(var j = 0; j < commitsList.length; j++ )
+	//{
+		arrArgs = commit;
 		//arrArgs
-		//0 == CMD
-		//1 == pointArray
-		//2 == Vector3 transformBy
-		//3 == Mesh Index in allObjects
-		if(arrArgs[0] == "TRANSLATE_POINTS")
+		//2 == CMD
+		//3 == pointArray
+		//4 == Vector3 transformBy
+		//5 == Mesh Index in allObjects
+		if(arrArgs[2] == "TRANSLATE_POINTS")
 		{
-			console.log("CMD: " + arrArgs[0]);
-			console.log("pointArray: " + arrArgs[1]);
-			console.log("transformBy: " + arrArgs[2]);
-			console.log("Mesh Index: " + arrArgs[3]);
-			if(argArgs[1] == "*")
+			console.log("CMD: " + arrArgs[2]);
+			console.log("pointArray: " + arrArgs[3]);
+			console.log("transformBy: " + arrArgs[4]);
+			console.log("Mesh Index: " + arrArgs[5]);
+			if(argArgs[3] == "*")
 			{
 				for(var i = 0; i < arrArgs[1].length; i++)
 				{
-					allObjects[arrArgs[3]].verticies[i].Add(arrArgs[2]);
+					allObjects[arrArgs[5]].verticies[i].Add(arrArgs[4]);
 				}
 			}
 			else
 			{
 				for(var i = 0; i < arrArgs[1].length; i++)
 				{
-					allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Add(arrArgs[2]);
+					allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Add(arrArgs[4]);
 				}
 			}
 		}
-		else if(arrArgs[0] == "SCALE_POINTS")
+		else if(arrArgs[2] == "SCALE_POINTS")
 		{
 			var avg = THREE.Vector3(0,0,0);
-			for(var i = 0; i < arrArgs[1].length; i++)
+			for(var i = 0; i < arrArgs[3].length; i++)
 			{
-				avg.Add(allObjects[arrArgs[3]].verticies[arrArgs[1][i]]);
+				avg.Add(allObjects[arrArgs[5]].verticies[arrArgs[3][i]]);
 			}
 			avg.x /= arrArgs[1].length;
 			avg.y /= arrArgs[1].length;
 			avg.z /= arrArgs[1].length;
-			for(var i = 0; i < arrArgs[2].length; i++)
+			for(var i = 0; i < arrArgs[3].length; i++)
 			{
-				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Sub(avg);
+				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Sub(avg);
 
-				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].x *= arrArgs[2].x;
-				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].y *= arrArgs[2].y;
-				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].z *= arrArgs[2].z;
+				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].x *= arrArgs[4].x;
+				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].y *= arrArgs[4].y;
+				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].z *= arrArgs[4].z;
 
-				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Add(avg);
+				allObjects[arrArgs[5]].verticies[arrArgs[3][i]].Add(avg);
 			}
 		}
-	}
-	listCommits = [];
+	//}
 }
 
 function onMouseUp( event )
