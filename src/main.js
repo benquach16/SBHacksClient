@@ -592,7 +592,7 @@ function updateMesh ()
 	console.log("commit: " + commitsList);
 	for(var j = 0; j < commitsList.length; j++ )
 	{
-		arrArgs = commit;
+		arrArgs = commitsList[j];
 		//arrArgs
 		//2 == CMD
 		//3 == pointArray
