@@ -62,6 +62,7 @@ function receiveCommit(ID)
 		if(msg)
 		{
 			listCommits.push( stringToCommit(msg) );
+			lastID = listCommits[listCommits.length-1][1];
 			alert(listCommits[listCommits.length-1]);
 			//decodeCommit(listCommits[listCommits.length-1]);
 		}
