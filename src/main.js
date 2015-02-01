@@ -634,8 +634,18 @@ function onMouseUp( event )
 				//information packaging function
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
- 					translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry.geometry));
+ 					translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry));
 					console.log(differenceVector.x);
+					console.log(differenceVector.y);					
+				}
+				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.SCALE_MODE)
+				{
+					scalePoints(selectedGeometry.geometry.vertices, differenceVector, allObjects.indexOf(selectedGeometry));
+					
+				}
+				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.ROTATE_MODE)
+				{
+					rotatePoints(selectedGeometry.geometry.vertices, differenceVector, allObject.indexOf(selectedGeometry));
 				}
 			}
 		}
@@ -643,7 +653,18 @@ function onMouseUp( event )
 		{
 			if(selectedVertices.length >0)
 			{
-				translatePoints(selectedVertices, differenceVector);
+				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
+				{
+					translatePoints(selectedVertices, differenceVector, allObjects.indexOf(selectedGeometry.geometry));
+				}
+				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
+				{
+					scalePoints(selectedVertices, differenceVector, allObjects.indexOf(selectedGeometry));
+				}
+				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
+				{
+					rotatePoints(selectedVertices, differenceVector, allObjects.indexOf(selectedGeometry));					
+				}
 			}
 		}
 		differenceVector.x = 0;
