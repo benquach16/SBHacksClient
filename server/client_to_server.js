@@ -1,6 +1,7 @@
 //TODO: Make this dynamic
 var TABLE_NAME = "exavqxxu3s";
 var lastID = 0;
+var ip = "10.144.6.101:80";
 
 var listCommits = [];
 
@@ -25,7 +26,7 @@ function stringToCommit(msg)
 function removeCommit(ID)
 {
 	$.ajax({
-		url: "http://10.143.6.164:80/SBHacksClient/server/removeRow.php",       
+		url: "http://"+ ip +"/SBHacksClient/server/removeRow.php",       
 		type: "POST",
 		data: {
 			id: ID,
@@ -49,7 +50,7 @@ function removeCommit(ID)
 function receiveCommit(ID)
 {
 	$.ajax({
-		url: "http://10.143.6.164:80/SBHacksClient/server/pullData.php",       
+		url: "http://"+ ip +"/SBHacksClient/server/pullData.php",       
 		type: "POST",
 		data: {
 			id: ID,
@@ -61,6 +62,7 @@ function receiveCommit(ID)
 		if(msg)
 		{
 			listCommits.push( stringToCommit(msg) );
+			alert(listCommits[listCommits.length-1]);
 			//decodeCommit(listCommits[listCommits.length-1]);
 		}
 	});
@@ -69,7 +71,7 @@ function receiveCommit(ID)
 function sendCommit(_cmd, _verts1, _verts2, _func)
 {
    $.ajax({
-		url: "http://10.143.6.164:80/SBHacksClient/server/array_edit.php",       
+		url: "http://"+ ip +"/SBHacksClient/server/array_edit.php",       
 		type: "POST",
 		data: {
 			cmd: _cmd,
