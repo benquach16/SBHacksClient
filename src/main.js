@@ -626,7 +626,7 @@ function updateMesh ()
 				console.log(obj.geometry.vertices.length);
 				
 
-				f+or(var i = 0; i < obj.geometry.vertices.length; i++)
+				for(var i = 0; i < obj.geometry.vertices.length; i++)
 				{
 					obj.geometry.vertices[i].add(transformBy);
 					
