@@ -598,9 +598,19 @@ function updateMesh ()
 		//3 == Mesh Index in allObjects
 		if(arrArgs[0] == "TRANSLATE_POINTS")
 		{
-			for(var i = 0; i < arrArgs[1].length; i++)
+			if(argArgs[1] == "*")
 			{
-				allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Add(arrArgs[2]);
+				for(var i = 0; i < arrArgs[1].length; i++)
+				{
+					allObjects[arrArgs[3]].verticies[i].Add(arrArgs[2]);
+				}
+			}
+			else
+			{
+				for(var i = 0; i < arrArgs[1].length; i++)
+				{
+					allObjects[arrArgs[3]].verticies[arrArgs[1][i]].Add(arrArgs[2]);
+				}
 			}
 		}
 		else if(arrArgs[0] == "SCALE_POINTS")
@@ -642,7 +652,7 @@ function onMouseUp( event )
 				//information packaging function
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
- 					translatePoints(selectedGeometry.geometry.vertices,differenceVector,allObjects.indexOf(selectedGeometry));
+ 					translatePoints("*",differenceVector,allObjects.indexOf(selectedGeometry));
 					console.log(differenceVector.x);
 					console.log(differenceVector.y);					
 				}
@@ -663,7 +673,7 @@ function onMouseUp( event )
 			{
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
-					translatePoints(selectedVertices, differenceVector, allObjects.indexOf(selectedGeometry.geometry));
+					translatePoints(vertexindices, differenceVector, allObjects.indexOf(selectedGeometry.geometry));
 				}
 				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 				{
