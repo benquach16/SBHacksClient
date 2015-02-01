@@ -31,6 +31,7 @@ function stringToCommit(msg)
 {
 	var ret = msg.split("&");
 	ret[1] = parseInt(ret[1]);
+	ret[5] = parseInt(ret[5]);
 	return ret;
 }
 
