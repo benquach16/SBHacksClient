@@ -620,13 +620,12 @@ function updateMesh ()
 				var obj = scene.children[meshIndex];
 				console.log(obj.geometry.vertices.length);
 				
-				obj.geometry.vertices[0].x += 500;
-				/*
-				for(var i = 0; i < scene.getObjectById( meshIndex, true ).geometry.vertices.length; i++)
+
+				for(var i = 0; i < obj.geometry.vertices.length; i++)
 				{
-					scene.getObjectById( meshIndex, true ).geometry.vertices[i].add(transformBy);
+					obj.geometry.vertices[i].add(transformBy);
 					
-					}*/
+				}
 				obj.geometry.verticesNeedUpdate = true;
 			}
 			else
@@ -705,12 +704,12 @@ function onMouseUp( event )
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.SCALE_MODE)
 				{
-					scalePoints(selectedGeometry.geometry.vertices, differenceVector, selectedGeometry.id);
+					scalePoints(selectedGeometry.geometry.vertices, differenceVector, scene.children.indexOf(selectedGeometry));
 					
 				}
 				else if(CURRENT_TRANSFORM_MODE ==transformModeEnum.ROTATE_MODE)
 				{
-					rotatePoints(selectedGeometry.geometry.vertices, differenceVector, selectedGeometry.id);
+					rotatePoints(selectedGeometry.geometry.vertices, differenceVector, scene.children.indexOf(selectedGeometry));
 				}
 			}
 		}
@@ -720,15 +719,15 @@ function onMouseUp( event )
 			{
 				if(CURRENT_TRANSFORM_MODE == transformModeEnum.TRANSLATE_MODE)
 				{
-					translatePoints(vertexindices, differenceVector, selectedGeometry.id);
+					translatePoints(vertexindices, differenceVector, scene.children.indexOf(selectedGeometry));
 				}
 				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.SCALE_MODE)
 				{
-					scalePoints(selectedVertices, differenceVector, selectedGeometry.id);
+					scalePoints(selectedVertices, differenceVector, scene.children.indexOf(selectedGeometry));
 				}
 				else if(CURRENT_TRANSFORM_MODE == transformModeEnum.ROTATE_MODE)
 				{
-					rotatePoints(selectedVertices, differenceVector, selectedGeometry.id);					
+					rotatePoints(selectedVertices, differenceVector, scene.children.indexOf(selectedGeometry));					
 				}
 			}
 		}
